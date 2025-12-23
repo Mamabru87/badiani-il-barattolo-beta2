@@ -814,11 +814,11 @@
     .specs-overlay{ position:fixed; top:0;left:0; width:100%; height:100%; z-index:9999; display:none; opacity:0; transition:opacity 0.5s ease; overflow:hidden; }
     .specs-overlay.active{ display:block; opacity:1; }
     .specs-overlay-bg{ position:fixed; top:0;left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); backdrop-filter:blur(10px); }
-    .specs-overlay-content{ position:relative; z-index:2; display:flex; flex-direction:row; align-items:center; justify-content:center; width:100%; max-width:1150px; height:100vh; margin:0 auto; gap:30px; padding:25px; }
+    .specs-overlay-content{ position:relative; z-index:2; display:flex; flex-direction:row; align-items:flex-start; justify-content:center; width:100%; max-width:1150px; height:100vh; margin:0 auto; gap:30px; padding:25px; }
     /* IMMAGINE OVERLAY: quadrata e grande come il pannello specs */
     .specs-overlay-image{ 
-      width:50%; 
-      max-width:550px; 
+      width:48%; 
+      max-width:520px; 
       aspect-ratio:1/1;
       overflow:hidden; 
       border-radius:12px; 
@@ -878,55 +878,21 @@
     .gallery-item:hover{ transform:none; }
     .gallery-grid:hover .gallery-item:not(:hover){ transform:none; opacity:1; filter:none; }
 
-    /* Mobile: tap-to-zoom (round, no crop, no clipping) */
+    /* Mobile: tap-to-zoom (JS toggles .is-zoomed) */
     @media (hover:none) and (pointer:coarse){
       .gallery-item{ transform-origin:center; }
-
       .gallery-item.is-zoomed{
-        position:fixed;
-        /* target position set by JS (defaults to center) */
-        left: var(--zoom-left, 50%);
-        top: var(--zoom-top, 50%);
-        /* final size (safe for mobile UI bars) */
-        width:min(64vmin, 285px);
-        height:min(64vmin, 285px);
-        max-width:84vw;
-        max-height:min(56dvh, 285px);
-        z-index:10002;
+        transform:scale(2.52);
+        box-shadow:0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(255,90,158,0.3);
+        z-index:10;
         border-color: var(--badiani-pink);
-        box-shadow:0 30px 80px rgba(0,0,0,0.55), 0 0 60px rgba(255,90,158,0.28);
-        /* keep the background subtle so the image looks bigger */
-        background: radial-gradient(circle at 30% 20%, rgba(240,103,166,0.14), rgba(30,57,141,0.10) 55%, rgba(0,0,0,0.45) 100%);
-        touch-action: pan-y;
-        /* FLIP vars set by JS */
-        --flip-x: 0px;
-        --flip-y: 0px;
-        --flip-scale: 1;
-        transform:
-          translate(-50%, -50%)
-          translate(var(--flip-x), var(--flip-y))
-          scale(var(--flip-scale));
-        will-change: transform;
-        transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
-
-      /* Keep image visible inside the circle (no crop). */
-      .gallery-item.is-zoomed img{
-        width:100%;
-        height:100%;
-        /* Fill the circle more (these are top views, so cover works well) */
-        object-fit:cover;
-        object-position:center;
-        transform: scale(1.04);
-        transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
-        filter:brightness(1.06);
-      }
-
       .gallery-grid.has-zoom .gallery-item:not(.is-zoomed){
         transform: scale(0.7);
         opacity: 0.55;
         filter: blur(2px) grayscale(30%);
       }
+      .gallery-item.is-zoomed img{ transform: scale(1.15); }
     }
 
     /* Desktop-only hover behavior for gallery */
@@ -952,31 +918,6 @@
         transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     /* hover img scaling handled in hover media query above */
-
-    /* Gallery lightbox (mobile-friendly, no cropping) */
-    .gallery h2,
-    .gallery-subtitle{
-      transition:
-        opacity 0.35s ease,
-        transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-        filter 0.35s ease;
-      will-change: opacity, transform, filter;
-    }
-    .gallery.is-lightbox-open h2,
-    .gallery.is-lightbox-open .gallery-subtitle{
-      opacity:0;
-      transform: translateY(-14px) scale(0.98);
-      filter: blur(8px);
-      pointer-events:none;
-    }
-
-    /* Reduce motion: keep it snappy and readable */
-    @media (prefers-reduced-motion: reduce){
-      .gallery h2,
-      .gallery-subtitle{ transition:none !important; }
-      .gallery.is-lightbox-open h2,
-      .gallery.is-lightbox-open .gallery-subtitle{ filter:none !important; transform:none !important; }
-    }
 
     .why{ background:linear-gradient(to bottom, #1f4495 0%, #0f1f45 100%); color:#fff; padding:70px 20px; text-align:center; position:relative; overflow:hidden; }
     .why::before{ content:""; position:absolute; inset:0; background-image:url('worldwide.webp'); background-size:cover; background-position:center; opacity:0.08; pointer-events:none; z-index:0; filter: brightness(1.2); }
@@ -1092,7 +1033,7 @@
       /* Bigger, more impactful hero photo on mobile */
       .hero{ padding:0; }
       .hero .hero-bg{ height:clamp(320px, 52vh, 480px); background:#1e398d; overflow:hidden; }
-      .hero .hero-bg img{ width:200%; max-width:none; height:100%; object-fit:cover; object-position:center; margin-left:-50%; transform:none; transition: margin-left 0.3s ease; }
+      .hero .hero-bg img{ width:190%; max-width:none; height:100%; object-fit:cover; object-position:center; margin-left:-45%; transform:none; transition: margin-left 0.3s ease; }
 
       /* Hero scroll mode - tap to explore full image */
       .hero.scroll-mode .hero-content{ 
@@ -1105,7 +1046,7 @@
       .hero.scroll-mode .hero-content p{ opacity:0 !important; transition:opacity 0.3s ease; }
       .hero.scroll-mode .hero-content .hero-cta{ opacity:1 !important; pointer-events:auto; position:relative; z-index:10; }
       .hero.scroll-mode .hero-bg{ overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory; filter:none !important; }
-      .hero.scroll-mode .hero-bg img{ width:200%; margin-left:0; scroll-snap-align:start; filter:brightness(1); }
+      .hero.scroll-mode .hero-bg img{ width:190%; margin-left:0; scroll-snap-align:start; filter:brightness(1); }
       .hero.scroll-mode .hero-bg::-webkit-scrollbar{ display:none; }
       /* Mobile: replace the big “scroll” pill with subtle arrows so the image stays visible */
       .hero-scroll-hint{ display:none !important; }
@@ -1453,43 +1394,12 @@
       .customizer-title{ font-size: 5vw; }
       .customizer-subtitle{ font-size: 3vw; }
       
-      /* Specs overlay (mobile): account for browser nav bar and avoid content cropping */
-      .specs-overlay{ height:100vh; height:100dvh; }
-      .specs-overlay-bg{ height:100vh; height:100dvh; }
-      .specs-overlay-content{
-        flex-direction:column;
-        padding:10px;
-        height:100vh;
-        height:100dvh;
-        /* iOS/Safari friendly fallback for the smallest viewport */
-        min-height:100svh;
-        overflow-y:auto;
-        gap:14px;
-        justify-content:flex-start;
-        padding-top:64px;
-        padding-bottom:24px;
-      }
-      /* Photo smaller on mobile so specs fit even with browser UI */
-      .specs-overlay-image{
-        width:auto;
-        max-width:90vw;
-        height:min(28dvh, 230px);
-        /* fallback if dvh isn't supported */
-        max-height:28vh;
-        aspect-ratio:1/1;
-        flex-shrink:0;
-      }
-      .specs-overlay-image img{ padding:0; }
-      .specs-panel-fullscreen{
-        width:95vw;
-        max-width:none;
-        max-height:none;
-        padding:10px;
-        /* critical for flex + overflow in column layout */
-        flex:1 1 auto;
-        min-height:0;
-        overflow-y:auto;
-      }
+      /* Specs overlay proporzionato - no scroll */
+      .specs-overlay-content{flex-direction:column;align-items:center;padding:10px;height:100vh;overflow-y:auto;gap:14px;justify-content:flex-start;padding-top:52px;padding-bottom:24px;}
+      /* +50% photo size on mobile */
+      .specs-overlay-image{width:86vw;max-width:320px;max-height:38vh;flex-shrink:0;}
+      .specs-overlay-image img{padding:5px;}
+      .specs-panel-fullscreen{width:95vw;max-width:none;max-height:none;padding:10px;flex-shrink:0;}
       .specs-panel-title{font-size:16px;margin-bottom:8px;padding-bottom:6px;}
       .specs-grid{gap:6px;}
       .spec-card{padding:6px 8px;border-radius:6px;border-left-width:3px;}
@@ -1574,7 +1484,7 @@
     /* Mobile: hero photo cropped sides, original height */
     @media(max-width:900px){
       .hero .hero-bg{ height:clamp(320px, 52vh, 480px); background:#1e398d; overflow:hidden; }
-      .hero .hero-bg img{ width:200%; max-width:none; height:100%; object-fit:cover; object-position:center; margin-left:-50%; transform:none; }
+      .hero .hero-bg img{ width:190%; max-width:none; height:100%; object-fit:cover; object-position:center; margin-left:-45%; transform:none; }
     }
 
     /* No hover zoom */
@@ -2483,8 +2393,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     })();
 
-    // Mobile: Gallery round tap-to-zoom (FLIP) without opening any "window".
-    // The circle itself pops out to the viewport (position:fixed) and animates from/to its original spot.
+    // Mobile: Gallery items tap-to-zoom (replaces hover)
     (function setupGalleryTapZoom(){
       const isMobile = window.matchMedia && (
         window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
@@ -2492,148 +2401,29 @@ document.addEventListener('DOMContentLoaded', () => {
       );
       if (!isMobile) return;
 
-      const section = document.querySelector('#gallery.gallery');
       const grid = document.querySelector('#gallery .gallery-grid');
       if (!grid) return;
 
       const items = Array.from(grid.querySelectorAll('.gallery-item'));
       if (!items.length) return;
 
-      // Accessibility + focus
+      // Make items accessible + focusable
       items.forEach((item) => {
         item.setAttribute('tabindex', '0');
         item.setAttribute('role', 'button');
-        item.setAttribute('aria-expanded', 'false');
+        item.setAttribute('aria-expanded', item.classList.contains('is-zoomed') ? 'true' : 'false');
       });
 
-      let prevOverflow = '';
-      let lastActive = null;
-      let isAnimating = false;
-
-      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      function anyOtherModalOpen(){
-        const specs = document.getElementById('specsOverlay');
-        const specsOpen = !!(specs && specs.classList.contains('active'));
-        const customOpen = !!(customizerModal && customizerModal.classList.contains('active'));
-        return specsOpen || customOpen;
-      }
-
-      function closeAll(){
-        items.forEach((it) => {
-          it.classList.remove('is-zoomed');
-          it.setAttribute('aria-expanded', 'false');
-          it.style.removeProperty('--zoom-left');
-          it.style.removeProperty('--zoom-top');
-          it.style.removeProperty('--flip-x');
-          it.style.removeProperty('--flip-y');
-          it.style.removeProperty('--flip-scale');
-        });
-        grid.classList.remove('has-zoom');
-        if (section) section.classList.remove('is-lightbox-open');
-        // Do NOT lock page scroll for this interaction.
-        // Restore overflow only if we changed it (we don't anymore), and avoid fighting other modals.
-        if (!anyOtherModalOpen()) document.body.style.overflow = prevOverflow || '';
-        if (lastActive && lastActive.focus) lastActive.focus();
-        lastActive = null;
-      }
-
-      function getGalleryHeaderCenter(){
-        // Target position: where the title/subtitle were (so the circle replaces them).
-        const title = section ? section.querySelector('h2') : null;
-        const sub = section ? section.querySelector('.gallery-subtitle') : null;
-        const r1 = title ? title.getBoundingClientRect() : null;
-        const r2 = sub ? sub.getBoundingClientRect() : null;
-
-        if (r1 && r2) {
-          const left = Math.min(r1.left, r2.left);
-          const top = Math.min(r1.top, r2.top);
-          const right = Math.max(r1.right, r2.right);
-          const bottom = Math.max(r1.bottom, r2.bottom);
-          return {
-            x: (left + right) / 2,
-            y: (top + bottom) / 2
-          };
-        }
-        if (r1) return { x: (r1.left + r1.right) / 2, y: (r1.top + r1.bottom) / 2 };
-        return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-      }
-
-      function openItemZoom(item){
-        if (isAnimating) return;
-        const img = item.querySelector('img');
-        if (!img) return;
-
-        // If already open on the same item: close
-        if (item.classList.contains('is-zoomed')) {
-          closeAll();
-          return;
-        }
-
-        // Close previous
-        closeAll();
-
-        lastActive = item;
-        // Keep scroll enabled: no body overflow lock.
-        prevOverflow = document.body.style.overflow;
-        grid.classList.add('has-zoom');
-        if (section) section.classList.add('is-lightbox-open');
-
-        // Position the zoomed circle over the (now dissolving) title/subtitle area
-        const target = getGalleryHeaderCenter();
-        item.style.setProperty('--zoom-left', target.x + 'px');
-        item.style.setProperty('--zoom-top', target.y + 'px');
-
-        const first = item.getBoundingClientRect();
-
-        item.classList.add('is-zoomed');
-        item.setAttribute('aria-expanded', 'true');
-
-        // Measure final (after it becomes fixed/centered)
-        const last = item.getBoundingClientRect();
-        const dx = first.left - last.left;
-        const dy = first.top - last.top;
-        const scale = first.width / last.width;
-
-        if (reduceMotion) {
-          item.style.setProperty('--flip-x', '0px');
-          item.style.setProperty('--flip-y', '0px');
-          item.style.setProperty('--flip-scale', '1');
-          return;
-        }
-
-        // Apply inverted transform, then animate to identity
-        item.style.setProperty('--flip-x', dx + 'px');
-        item.style.setProperty('--flip-y', dy + 'px');
-        item.style.setProperty('--flip-scale', String(scale));
-
-        // Force style calculation
-        item.getBoundingClientRect();
-
-        isAnimating = true;
-        requestAnimationFrame(() => {
-          item.style.setProperty('--flip-x', '0px');
-          item.style.setProperty('--flip-y', '0px');
-          item.style.setProperty('--flip-scale', '1');
-        });
-
-        const onDone = (e) => {
-          if (!e || e.propertyName !== 'transform') return;
-          isAnimating = false;
-          item.removeEventListener('transitionend', onDone);
-        };
-        item.addEventListener('transitionend', onDone);
-      }
-
-      // Click on item => open
       let isDragging = false;
       let startX = 0;
       let startY = 0;
+
       grid.addEventListener('pointerdown', (e) => {
         isDragging = false;
         startX = e.clientX;
         startY = e.clientY;
       }, { passive: true });
+
       grid.addEventListener('pointermove', (e) => {
         if (isDragging) return;
         const dx = Math.abs(e.clientX - startX);
@@ -2641,11 +2431,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dx > 10 || dy > 10) isDragging = true;
       }, { passive: true });
 
+      function closeAll(){
+        items.forEach((it) => {
+          it.classList.remove('is-zoomed');
+          it.setAttribute('aria-expanded', 'false');
+        });
+        grid.classList.remove('has-zoom');
+      }
+
+      function toggleItem(item){
+        const willOpen = !item.classList.contains('is-zoomed');
+        closeAll();
+        if (willOpen) {
+          item.classList.add('is-zoomed');
+          item.setAttribute('aria-expanded', 'true');
+          grid.classList.add('has-zoom');
+        }
+      }
+
       grid.addEventListener('click', (e) => {
+        // Prevent outside handler from immediately closing
+        e.stopPropagation();
         if (isDragging) return;
         const item = e.target && e.target.closest ? e.target.closest('.gallery-item') : null;
         if (!item) return;
-        openItemZoom(item);
+        toggleItem(item);
       });
 
       grid.addEventListener('keydown', (e) => {
@@ -2654,10 +2464,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const item = e.target && e.target.closest ? e.target.closest('.gallery-item') : null;
         if (!item) return;
         e.preventDefault();
-        openItemZoom(item);
+        toggleItem(item);
       });
 
-      // ESC closes
+      // Tap outside the gallery to close
+      document.addEventListener('click', (e) => {
+        if (grid.contains(e.target)) return;
+        closeAll();
+      });
+
+      // ESC closes when a gallery item is focused
       document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape') return;
         closeAll();
