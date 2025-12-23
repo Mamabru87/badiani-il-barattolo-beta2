@@ -888,14 +888,15 @@
         left: var(--zoom-left, 50%);
         top: var(--zoom-top, 50%);
         /* final size (safe for mobile UI bars) */
-        width:min(78vmin, 340px);
-        height:min(78vmin, 340px);
-        max-width:92vw;
-        max-height:min(78dvh, 340px);
+        width:min(64vmin, 285px);
+        height:min(64vmin, 285px);
+        max-width:84vw;
+        max-height:min(56dvh, 285px);
         z-index:10002;
         border-color: var(--badiani-pink);
         box-shadow:0 30px 80px rgba(0,0,0,0.55), 0 0 60px rgba(255,90,158,0.28);
-        background: radial-gradient(circle at 30% 20%, rgba(240,103,166,0.26), rgba(30,57,141,0.18) 55%, rgba(0,0,0,0.62) 100%);
+        /* keep the background subtle so the image looks bigger */
+        background: radial-gradient(circle at 30% 20%, rgba(240,103,166,0.14), rgba(30,57,141,0.10) 55%, rgba(0,0,0,0.45) 100%);
         touch-action: pan-y;
         /* FLIP vars set by JS */
         --flip-x: 0px;
@@ -913,8 +914,11 @@
       .gallery-item.is-zoomed img{
         width:100%;
         height:100%;
-        object-fit:contain;
-        transform:none;
+        /* Fill the circle more (these are top views, so cover works well) */
+        object-fit:cover;
+        object-position:center;
+        transform: scale(1.04);
+        transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
         filter:brightness(1.06);
       }
 
