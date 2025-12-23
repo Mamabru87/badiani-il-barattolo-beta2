@@ -882,23 +882,11 @@
     @media (hover:none) and (pointer:coarse){
       .gallery-item{ transform-origin:center; }
 
-      /* Backdrop for the zoom state (injected via JS) */
-      .gallery-zoom-backdrop{
-        position:fixed;
-        inset:0;
-        z-index:10001;
-        display:none;
-        background:rgba(0,0,0,0.70);
-        backdrop-filter: blur(10px);
-        opacity:0;
-        transition: opacity 0.28s ease;
-      }
-      .gallery-zoom-backdrop.active{ display:block; opacity:1; }
-
       .gallery-item.is-zoomed{
         position:fixed;
-        left:50%;
-        top:50%;
+        /* target position set by JS (defaults to center) */
+        left: var(--zoom-left, 50%);
+        top: var(--zoom-top, 50%);
         /* final size (safe for mobile UI bars) */
         width:min(78vmin, 340px);
         height:min(78vmin, 340px);
@@ -908,6 +896,7 @@
         border-color: var(--badiani-pink);
         box-shadow:0 30px 80px rgba(0,0,0,0.55), 0 0 60px rgba(255,90,158,0.28);
         background: radial-gradient(circle at 30% 20%, rgba(240,103,166,0.26), rgba(30,57,141,0.18) 55%, rgba(0,0,0,0.62) 100%);
+        touch-action: pan-y;
         /* FLIP vars set by JS */
         --flip-x: 0px;
         --flip-y: 0px;
@@ -977,113 +966,10 @@
       pointer-events:none;
     }
 
-    .gallery-lightbox{
-      position:fixed;
-      inset:0;
-      z-index:10002;
-      display:none;
-      padding:18px;
-      /* account for mobile browser UI */
-      height:100vh;
-      height:100dvh;
-      min-height:100svh;
-    }
-    .gallery-lightbox.active{ display:block; }
-    .gallery-lightbox-backdrop{
-      position:absolute;
-      inset:0;
-      background:rgba(0,0,0,0.78);
-      backdrop-filter: blur(10px);
-      opacity:0;
-      transition: opacity 0.28s ease;
-    }
-    .gallery-lightbox.active .gallery-lightbox-backdrop{ opacity:1; }
-
-    .gallery-lightbox-inner{
-      position:fixed;
-      z-index:1;
-      /* FLIP animation: we animate these via JS */
-      left:0;
-      top:0;
-      width:280px;
-      height:280px;
-      margin:0;
-      padding:0;
-      border-radius:50%;
-      overflow:hidden;
-      background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%);
-      border: 1px solid rgba(255,255,255,0.18);
-      box-shadow:
-        0 30px 90px rgba(0,0,0,0.55),
-        0 0 60px rgba(240,103,166,0.18);
-      opacity:0;
-      will-change: left, top, width, height, border-radius, opacity;
-      transition:
-        left 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-        top 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-        width 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-        height 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-        border-radius 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-        opacity 0.22s ease;
-    }
-    .gallery-lightbox.active .gallery-lightbox-inner{ opacity:1; }
-    .gallery-lightbox-imgwrap{
-      border-radius:inherit;
-      overflow:hidden;
-      background: radial-gradient(circle at 30% 20%, rgba(240,103,166,0.28), rgba(30,57,141,0.18) 55%, rgba(0,0,0,0.65) 100%);
-      width:100%;
-      height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .gallery-lightbox-img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      display:block;
-      transform: scale(1);
-    }
-    .gallery-lightbox-caption{
-      margin-top:10px;
-      padding:4px 6px 0;
-      color:#fff;
-      font-size:12px;
-      letter-spacing:1.6px;
-      text-transform:uppercase;
-      opacity:0.9;
-      text-align:center;
-      line-height:1.35;
-    }
-    .gallery-lightbox-close{
-      position:absolute;
-      top:10px;
-      right:10px;
-      width:44px;
-      height:44px;
-      border-radius:50%;
-      border:none;
-      background: linear-gradient(135deg, var(--badiani-pink), #ff7ab7);
-      color:#fff;
-      font-size:22px;
-      line-height:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      box-shadow:0 10px 28px rgba(0,0,0,0.35);
-      cursor:pointer;
-      opacity:0;
-      transform: scale(0.92);
-      transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .gallery-lightbox.active .gallery-lightbox-close{ opacity:1; transform: scale(1); }
-
     /* Reduce motion: keep it snappy and readable */
     @media (prefers-reduced-motion: reduce){
       .gallery h2,
-      .gallery-subtitle,
-      .gallery-lightbox-backdrop,
-      .gallery-lightbox-inner{ transition:none !important; }
+      .gallery-subtitle{ transition:none !important; }
       .gallery.is-lightbox-open h2,
       .gallery.is-lightbox-open .gallery-subtitle{ filter:none !important; transform:none !important; }
     }
@@ -2622,11 +2508,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Backdrop once
-      const backdrop = document.createElement('div');
-      backdrop.className = 'gallery-zoom-backdrop';
-      document.body.appendChild(backdrop);
-
       function anyOtherModalOpen(){
         const specs = document.getElementById('specsOverlay');
         const specsOpen = !!(specs && specs.classList.contains('active'));
@@ -2638,16 +2519,40 @@ document.addEventListener('DOMContentLoaded', () => {
         items.forEach((it) => {
           it.classList.remove('is-zoomed');
           it.setAttribute('aria-expanded', 'false');
+          it.style.removeProperty('--zoom-left');
+          it.style.removeProperty('--zoom-top');
           it.style.removeProperty('--flip-x');
           it.style.removeProperty('--flip-y');
           it.style.removeProperty('--flip-scale');
         });
         grid.classList.remove('has-zoom');
         if (section) section.classList.remove('is-lightbox-open');
-        backdrop.classList.remove('active');
+        // Do NOT lock page scroll for this interaction.
+        // Restore overflow only if we changed it (we don't anymore), and avoid fighting other modals.
         if (!anyOtherModalOpen()) document.body.style.overflow = prevOverflow || '';
         if (lastActive && lastActive.focus) lastActive.focus();
         lastActive = null;
+      }
+
+      function getGalleryHeaderCenter(){
+        // Target position: where the title/subtitle were (so the circle replaces them).
+        const title = section ? section.querySelector('h2') : null;
+        const sub = section ? section.querySelector('.gallery-subtitle') : null;
+        const r1 = title ? title.getBoundingClientRect() : null;
+        const r2 = sub ? sub.getBoundingClientRect() : null;
+
+        if (r1 && r2) {
+          const left = Math.min(r1.left, r2.left);
+          const top = Math.min(r1.top, r2.top);
+          const right = Math.max(r1.right, r2.right);
+          const bottom = Math.max(r1.bottom, r2.bottom);
+          return {
+            x: (left + right) / 2,
+            y: (top + bottom) / 2
+          };
+        }
+        if (r1) return { x: (r1.left + r1.right) / 2, y: (r1.top + r1.bottom) / 2 };
+        return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
       }
 
       function openItemZoom(item){
@@ -2665,11 +2570,15 @@ document.addEventListener('DOMContentLoaded', () => {
         closeAll();
 
         lastActive = item;
+        // Keep scroll enabled: no body overflow lock.
         prevOverflow = document.body.style.overflow;
-        document.body.style.overflow = 'hidden';
         grid.classList.add('has-zoom');
         if (section) section.classList.add('is-lightbox-open');
-        backdrop.classList.add('active');
+
+        // Position the zoomed circle over the (now dissolving) title/subtitle area
+        const target = getGalleryHeaderCenter();
+        item.style.setProperty('--zoom-left', target.x + 'px');
+        item.style.setProperty('--zoom-top', target.y + 'px');
 
         const first = item.getBoundingClientRect();
 
@@ -2743,9 +2652,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         openItemZoom(item);
       });
-
-      // Tap outside (backdrop) closes
-      backdrop.addEventListener('click', closeAll);
 
       // ESC closes
       document.addEventListener('keydown', (e) => {
