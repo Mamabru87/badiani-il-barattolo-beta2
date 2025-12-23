@@ -919,6 +919,127 @@
     }
     /* hover img scaling handled in hover media query above */
 
+    /* Gallery lightbox (mobile-friendly, no cropping) */
+    .gallery h2,
+    .gallery-subtitle{
+      transition:
+        opacity 0.35s ease,
+        transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+        filter 0.35s ease;
+      will-change: opacity, transform, filter;
+    }
+    .gallery.is-lightbox-open h2,
+    .gallery.is-lightbox-open .gallery-subtitle{
+      opacity:0;
+      transform: translateY(-14px) scale(0.98);
+      filter: blur(8px);
+      pointer-events:none;
+    }
+
+    .gallery-lightbox{
+      position:fixed;
+      inset:0;
+      z-index:10002;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      /* account for mobile browser UI */
+      height:100vh;
+      height:100dvh;
+      min-height:100svh;
+    }
+    .gallery-lightbox.active{ display:flex; }
+    .gallery-lightbox-backdrop{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.78);
+      backdrop-filter: blur(10px);
+      opacity:0;
+      transition: opacity 0.28s ease;
+    }
+    .gallery-lightbox.active .gallery-lightbox-backdrop{ opacity:1; }
+
+    .gallery-lightbox-inner{
+      position:relative;
+      z-index:1;
+      width:min(92vw, 520px);
+      max-height:min(78dvh, 620px);
+      background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius:22px;
+      padding:12px;
+      box-shadow:
+        0 30px 90px rgba(0,0,0,0.55),
+        0 0 60px rgba(240,103,166,0.18);
+      transform: translateY(18px) scale(0.96);
+      opacity:0;
+      transition:
+        transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity 0.28s ease;
+    }
+    .gallery-lightbox.active .gallery-lightbox-inner{
+      transform: translateY(0) scale(1);
+      opacity:1;
+    }
+    .gallery-lightbox-imgwrap{
+      border-radius:18px;
+      overflow:hidden;
+      background: radial-gradient(circle at 30% 20%, rgba(240,103,166,0.28), rgba(30,57,141,0.18) 55%, rgba(0,0,0,0.65) 100%);
+      aspect-ratio:1/1;
+      width:100%;
+      max-height: min(62dvh, 520px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .gallery-lightbox-img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+      transform: scale(1);
+    }
+    .gallery-lightbox-caption{
+      margin-top:10px;
+      padding:4px 6px 0;
+      color:#fff;
+      font-size:12px;
+      letter-spacing:1.6px;
+      text-transform:uppercase;
+      opacity:0.9;
+      text-align:center;
+      line-height:1.35;
+    }
+    .gallery-lightbox-close{
+      position:absolute;
+      top:-14px;
+      right:-14px;
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      border:none;
+      background: linear-gradient(135deg, var(--badiani-pink), #ff7ab7);
+      color:#fff;
+      font-size:22px;
+      line-height:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 10px 28px rgba(0,0,0,0.35);
+      cursor:pointer;
+    }
+
+    /* Reduce motion: keep it snappy and readable */
+    @media (prefers-reduced-motion: reduce){
+      .gallery h2,
+      .gallery-subtitle,
+      .gallery-lightbox-backdrop,
+      .gallery-lightbox-inner{ transition:none !important; }
+      .gallery.is-lightbox-open h2,
+      .gallery.is-lightbox-open .gallery-subtitle{ filter:none !important; transform:none !important; }
+    }
+
     .why{ background:linear-gradient(to bottom, #1f4495 0%, #0f1f45 100%); color:#fff; padding:70px 20px; text-align:center; position:relative; overflow:hidden; }
     .why::before{ content:""; position:absolute; inset:0; background-image:url('worldwide.webp'); background-size:cover; background-position:center; opacity:0.08; pointer-events:none; z-index:0; filter: brightness(1.2); }
     .why > *{ position:relative; z-index:1; }
@@ -2424,37 +2545,107 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     })();
 
-    // Mobile: Gallery items tap-to-zoom (replaces hover)
-    (function setupGalleryTapZoom(){
+    // Mobile: Gallery lightbox (tap opens a full, un-cropped image + nice text transition)
+    (function setupGalleryLightbox(){
       const isMobile = window.matchMedia && (
         window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
         window.matchMedia('(max-width: 900px)').matches
       );
       if (!isMobile) return;
 
+      const section = document.querySelector('#gallery.gallery');
       const grid = document.querySelector('#gallery .gallery-grid');
       if (!grid) return;
 
       const items = Array.from(grid.querySelectorAll('.gallery-item'));
       if (!items.length) return;
 
-      // Make items accessible + focusable
+      // Build lightbox once
+      const lightbox = document.createElement('div');
+      lightbox.className = 'gallery-lightbox';
+      lightbox.setAttribute('role', 'dialog');
+      lightbox.setAttribute('aria-modal', 'true');
+      lightbox.setAttribute('aria-label', 'Image preview');
+      lightbox.innerHTML =
+        '<div class="gallery-lightbox-backdrop" aria-hidden="true"></div>' +
+        '<div class="gallery-lightbox-inner">' +
+          '<button class="gallery-lightbox-close" type="button" aria-label="Close">&times;</button>' +
+          '<div class="gallery-lightbox-imgwrap">' +
+            '<img class="gallery-lightbox-img" alt="" />' +
+          '</div>' +
+          '<div class="gallery-lightbox-caption" aria-hidden="true"></div>' +
+        '</div>';
+      document.body.appendChild(lightbox);
+
+      const lbImg = lightbox.querySelector('.gallery-lightbox-img');
+      const lbCaption = lightbox.querySelector('.gallery-lightbox-caption');
+      const lbClose = lightbox.querySelector('.gallery-lightbox-close');
+
+      // Accessibility + focus
       items.forEach((item) => {
         item.setAttribute('tabindex', '0');
         item.setAttribute('role', 'button');
-        item.setAttribute('aria-expanded', item.classList.contains('is-zoomed') ? 'true' : 'false');
+        item.setAttribute('aria-haspopup', 'dialog');
       });
 
+      let prevOverflow = '';
+      let lastActive = null;
+
+      function anyOtherModalOpen(){
+        const specs = document.getElementById('specsOverlay');
+        const specsOpen = !!(specs && specs.classList.contains('active'));
+        const customOpen = !!(customizerModal && customizerModal.classList.contains('active'));
+        return specsOpen || customOpen;
+      }
+
+      function openLightbox(fromItem){
+        const img = fromItem && fromItem.querySelector ? fromItem.querySelector('img') : null;
+        if (!img) return;
+
+        const src = img.currentSrc || img.src;
+        const alt = img.alt || '';
+
+        lastActive = fromItem;
+        lbImg.src = src;
+        lbImg.alt = alt;
+        lbCaption.textContent = alt;
+        lbCaption.style.display = alt ? '' : 'none';
+
+        prevOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        document.body.classList.add('gallery-lightbox-open');
+        if (section) section.classList.add('is-lightbox-open');
+        lightbox.classList.add('active');
+
+        // focus close for quick dismissal
+        lbClose && lbClose.focus && lbClose.focus();
+      }
+
+      function closeLightbox(){
+        if (!lightbox.classList.contains('active')) return;
+        lightbox.classList.remove('active');
+        document.body.classList.remove('gallery-lightbox-open');
+        if (section) section.classList.remove('is-lightbox-open');
+
+        // restore scroll only if nothing else is open
+        if (!anyOtherModalOpen()) {
+          document.body.style.overflow = prevOverflow || '';
+        }
+
+        // give focus back
+        if (lastActive && lastActive.focus) lastActive.focus();
+        lastActive = null;
+      }
+
+      // Click on item => open
       let isDragging = false;
       let startX = 0;
       let startY = 0;
-
       grid.addEventListener('pointerdown', (e) => {
         isDragging = false;
         startX = e.clientX;
         startY = e.clientY;
       }, { passive: true });
-
       grid.addEventListener('pointermove', (e) => {
         if (isDragging) return;
         const dx = Math.abs(e.clientX - startX);
@@ -2462,31 +2653,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dx > 10 || dy > 10) isDragging = true;
       }, { passive: true });
 
-      function closeAll(){
-        items.forEach((it) => {
-          it.classList.remove('is-zoomed');
-          it.setAttribute('aria-expanded', 'false');
-        });
-        grid.classList.remove('has-zoom');
-      }
-
-      function toggleItem(item){
-        const willOpen = !item.classList.contains('is-zoomed');
-        closeAll();
-        if (willOpen) {
-          item.classList.add('is-zoomed');
-          item.setAttribute('aria-expanded', 'true');
-          grid.classList.add('has-zoom');
-        }
-      }
-
       grid.addEventListener('click', (e) => {
-        // Prevent outside handler from immediately closing
-        e.stopPropagation();
         if (isDragging) return;
         const item = e.target && e.target.closest ? e.target.closest('.gallery-item') : null;
         if (!item) return;
-        toggleItem(item);
+        openLightbox(item);
       });
 
       grid.addEventListener('keydown', (e) => {
@@ -2495,20 +2666,41 @@ document.addEventListener('DOMContentLoaded', () => {
         const item = e.target && e.target.closest ? e.target.closest('.gallery-item') : null;
         if (!item) return;
         e.preventDefault();
-        toggleItem(item);
+        openLightbox(item);
       });
 
-      // Tap outside the gallery to close
-      document.addEventListener('click', (e) => {
-        if (grid.contains(e.target)) return;
-        closeAll();
+      // Close interactions
+      lbClose && lbClose.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeLightbox();
       });
 
-      // ESC closes when a gallery item is focused
+      lightbox.addEventListener('click', (e) => {
+        // Clicking outside the inner card closes
+        const inner = e.target && e.target.closest ? e.target.closest('.gallery-lightbox-inner') : null;
+        if (inner) return;
+        closeLightbox();
+      });
+
       document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape') return;
-        closeAll();
+        closeLightbox();
       });
+
+      // Swipe down to close (nice on mobile)
+      let swStartY = 0;
+      let swStartX = 0;
+      lightbox.addEventListener('pointerdown', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+        swStartY = e.clientY;
+        swStartX = e.clientX;
+      }, { passive: true });
+      lightbox.addEventListener('pointerup', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+        const dy = e.clientY - swStartY;
+        const dx = Math.abs(e.clientX - swStartX);
+        if (dy > 70 && dx < 60) closeLightbox();
+      }, { passive: true });
     })();
 
     // Mobile: auto-zoom product cards while scrolling (when cards are in view)
