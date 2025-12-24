@@ -334,6 +334,10 @@
 
     .header-wrapper{ position:sticky; top:0; z-index:1000; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
     header{ background:var(--badiani-blue); padding:18px 40px; display:flex; align-items:center; justify-content:space-between; position:relative; }
+    .logo-link{ display:flex; align-items:center; text-decoration:none; cursor:pointer; -webkit-tap-highlight-color: transparent; }
+    /* Remove the pink focus ring that appears on click; keep a subtle ring for keyboard navigation only */
+    .logo-link:focus{ outline:none; }
+    .logo-link:focus-visible{ outline:2px solid rgba(255,255,255,0.6); outline-offset:2px; border-radius:10px; }
     .logo-img{ height:55px; width:auto; object-fit:contain; filter: invert(1) grayscale(1) brightness(200%); mix-blend-mode: screen; }
     .nav-menu{ display:flex; gap:35px; align-items:center; }
     .nav-menu a{ color:#fff; text-decoration:none; font-size:16px; letter-spacing:2px; text-transform:uppercase; transition:all 0.3s; padding:12px 20px; border-radius:25px; font-weight:500; }
@@ -428,14 +432,14 @@
         filter:brightness(1) saturate(1.1);
         transform: scale(1.05);
     }
-    .hero-content{ position:absolute; top:0; left:50%; transform:translateX(-50%); z-index:2; width:100%; max-width:900px; padding:80px 20px 20px; transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease; }
+    .hero-content{ position:absolute; top:15%; left:50%; transform:translateX(-50%); z-index:2; width:100%; max-width:900px; padding:80px 20px 20px; transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease; }
     .hero:hover .hero-content{
         opacity: 0;
         transform: translateY(-30px) scale(0.95);
         filter: blur(10px);
         pointer-events: none;
     }
-    .hero h1{ font-family:'SuperGroteskDigits', 'SuperGroteskB'; font-size:72px; font-weight:700; letter-spacing:5px; text-transform:uppercase; margin-bottom:18px; }
+    .hero h1{ font-family:'SuperGroteskDigits', 'SuperGroteskB'; font-size:86px; font-weight:700; letter-spacing:5px; text-transform:uppercase; margin-bottom:18px; }
     .hero h1 span{ color:var(--badiani-pink); font-style:normal; }
     .hero .hero-subtitle{ font-family:'SuperGroteskC', 'SuperGroteskA', 'SuperGroteskB', sans-serif; font-size:30px; margin-bottom:15px; font-style:normal; font-weight:500; letter-spacing:1.5px; text-transform:uppercase; font-variant-caps:normal; }
     .hero p{ font-size:28px; line-height:1.9; font-weight:300; }
@@ -610,8 +614,9 @@
       z-index: 2;
     }
     /* Let the video column auto-size from the video's aspect ratio when height is 100% */
-    .barattolo-intro-content{ max-width:1200px; margin:0 auto; display:grid; grid-template-columns:auto 1fr; gap:80px; align-items:stretch; text-align:left; padding:0 20px; }
-    .barattolo-image-pila{ position:relative; width:auto; min-width:220px; max-width:420px; display:flex; align-items:stretch; justify-content:center; overflow:hidden; background:rgba(0,0,0,0.18); }
+    .barattolo-intro-content{ max-width:1400px; margin:0 auto; display:grid; grid-template-columns:auto 1fr; gap:70px; align-items:stretch; text-align:left; padding:0 20px; }
+    /* Bigger video column on desktop (keeps aspect ratio via object-fit:contain on the <video>) */
+    .barattolo-image-pila{ position:relative; width:clamp(320px, 30vw, 560px); min-width:280px; max-width:560px; display:flex; align-items:stretch; justify-content:center; overflow:hidden; background:rgba(0,0,0,0.18); }
 
     /* Subtle overlay so any letterboxing looks like part of the background */
     .barattolo-image-pila::after{
@@ -624,14 +629,14 @@
     }
     .barattolo-image-pila img, .barattolo-image-pila video{ width:100%; border-radius:15px; box-shadow:0 15px 50px rgba(0,0,0,0.2); transition:transform 0.4s ease; display:block; }
     .barattolo-image-pila img{ height:auto; border:6px solid #fff; }
-    /* Video: full visible frame (no crop) inside a tall vertical strip */
+    /* Video: fill the column (zoom a bit to avoid visible empty bands) */
     .barattolo-image-pila video{
       display:block;
-      width:auto;
+      width:100%;
       height:100%;
       max-width:100%;
-      object-fit:contain;
-      object-position:center;
+      object-fit:cover;
+      object-position:center 55%;
       border:0;
       border-radius:0;
       box-shadow:none;
@@ -646,6 +651,14 @@
     .barattolo-text p{ font-size:19px; line-height:1.9; margin-bottom:18px; font-weight:400; text-shadow:1px 1px 3px rgba(0,0,0,0.2); }
     .barattolo-text .highlight-pink{ background:var(--badiani-pink); color:#fff; padding:2px 6px; border-radius:3px; font-family:'SuperGroteskC', 'SuperGroteskA', 'SuperGroteskB', sans-serif; font-weight:500; text-transform:uppercase; font-variant-caps:normal; }
     .barattolo-text strong{ color:#fff; font-weight:600; }
+
+    /* Desktop-only: give the section more height and slightly bigger text next to the video */
+    @media (min-width: 901px){
+      .barattolo-intro-content{ min-height: clamp(620px, 78vh, 880px); }
+      .barattolo-text{ padding:110px 0; }
+      .barattolo-text h2{ font-size:56px; }
+      .barattolo-text p{ font-size:21px; }
+    }
 
     .products{ padding:90px 20px; }
     .products > *{ position:relative; z-index:1; }
@@ -727,7 +740,7 @@
     .card.dolcevita .card-header{ background:linear-gradient(135deg, #3d2314, #5a3320); }
     .card.pistacchio .card-header{ background:linear-gradient(135deg, var(--badiani-green), #7f8c5a); }
     .card-name{ font-size:30px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
-    .card-sub{ font-size:16px; opacity:.9; letter-spacing:1px; font-style:normal; font-weight:300; }
+    .card-sub{ font-size:16px; opacity:.9; letter-spacing:1px; font-style:normal; font-weight:300; text-transform:uppercase; }
     .card-body{ padding:35px; }
     .card-description{ font-size:19px; margin-bottom:25px; line-height:1.9; color:var(--badiani-gray); font-weight:300; }
     .card-features{ list-style:none; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:14px; }
@@ -781,8 +794,53 @@
     .spec-card:nth-child(odd) .spec-label{ color:var(--badiani-blue); }
     .spec-card:nth-child(even) .spec-label{ color:var(--badiani-pink); }
     .spec-value{ font-size:15px; font-weight:500; color:var(--badiani-gray); line-height:1.4; }
-    .specs-close-btn{ position:fixed; top:18px; right:18px; width:55px; height:55px; background:linear-gradient(135deg, var(--badiani-pink), #ff7ab7); border:none; border-radius:50%; color:#fff; font-size:28px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.3s ease; z-index:10; box-shadow:0 5px 20px rgba(240,103,166,0.5); }
-    .specs-close-btn:hover{ background:linear-gradient(135deg, var(--badiani-blue), #2a4ab0); transform:rotate(90deg) scale(1.1); box-shadow:0 8px 28px rgba(30,57,141,0.6); }
+    .specs-close-btn{
+      --close-icon-size: 22px;
+      --close-icon-stroke: 3px;
+      position:fixed;
+      top:18px;
+      right:18px;
+      width:55px;
+      height:55px;
+      background:linear-gradient(135deg, var(--badiani-pink), #ff7ab7);
+      border:none;
+      border-radius:50%;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:10;
+      box-shadow:0 5px 20px rgba(240,103,166,0.5);
+
+      /* Avoid font-metric misalignment: draw the X via CSS instead of a glyph */
+      padding:0;
+      line-height:0;
+      font-size:0;
+      color:transparent;
+      text-shadow:none;
+      appearance:none;
+      -webkit-appearance:none;
+
+      transform-origin:center;
+      will-change:transform;
+      backface-visibility:hidden;
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .specs-close-btn::before,
+    .specs-close-btn::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:var(--close-icon-size);
+      height:var(--close-icon-stroke);
+      background:#fff;
+      border-radius:999px;
+      transform-origin:center;
+    }
+    .specs-close-btn::before{ transform:translate(-50%, -50%) rotate(45deg); }
+    .specs-close-btn::after{ transform:translate(-50%, -50%) rotate(-45deg); }
+    .specs-close-btn:hover{ background:linear-gradient(135deg, var(--badiani-blue), #2a4ab0); transform:rotate(90deg) scale(1.1) translateZ(0); box-shadow:0 8px 28px rgba(30,57,141,0.6); }
 
     .gallery{ background: #ff6b9d url('assets/barattolo-tab.webp?v=20251222') center/cover no-repeat; padding:90px 20px; text-align:center; position:relative; overflow:hidden; }
     .gallery::before{ content:''; position:absolute; inset:0; background:rgba(255,107,157,0.7); z-index:0; }
@@ -827,11 +885,39 @@
     }
 
     .why{ background:var(--badiani-blue); color:#fff; padding:70px 20px; text-align:center; position:relative; overflow:hidden; }
-    .why::before{ content:""; position:absolute; inset:0; background-image:url('worldwide.webp'); background-size:cover; background-position:center; opacity:0.15; pointer-events:none; z-index:0; filter: brightness(1.2); }
+    /* Give the background video more vertical room on desktop so it's less cropped */
+    @media (min-width: 901px){
+      /* Prevent the section (and thus the video) from becoming huge in fullscreen on large monitors */
+      .why{ min-height: clamp(520px, 70vh, 720px); }
+    }
+    /* Video background layer (replaces the previous image overlay) */
+    .why .why-video-bg{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+    .why .why-video-bg video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      /* Crop more from the top (bias further toward lower part) */
+      object-position: center 82%;
+      filter: brightness(0.75) saturate(1.1);
+      transform: translateZ(0);
+    }
+    /* Optional tint to keep text readable */
+    .why .why-video-bg::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(30,57,141,0.45);
+    }
     .why > *{ position:relative; z-index:1; }
     .why h2{ font-size:50px; letter-spacing:1px; text-transform:uppercase; margin-bottom:35px; color:#fff; font-weight:700; text-shadow:2px 2px 8px rgba(0,0,0,0.3); }
     .why h2 span{ color:var(--badiani-pink); font-style:normal; }
     .benefits{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:25px; max-width:1150px; margin:0 auto; }
+    /* Move the "tabs" (benefit cards grid) down on desktop */
+    @media (min-width: 901px){
+      .why .benefits{ transform: translateY(30%); }
+    }
     .benefit{ background:rgba(255,255,255,0.15); padding:30px 25px; border-radius:18px; border:2px solid rgba(255,255,255,0.2); transition:all 0.3s; backdrop-filter:blur(5px); }
     .benefit:hover{ border-color:var(--badiani-pink); background:rgba(255,255,255,0.22); transform:translateY(-5px); box-shadow:0 10px 30px rgba(0,0,0,0.3); }
     .benefit h3{ font-size:22px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:15px; color:var(--badiani-yellow); font-weight:600; text-shadow:1px 1px 4px rgba(0,0,0,0.3); }
@@ -898,10 +984,10 @@
       
       /* Hero proporzionato */
       .hero{height:auto; min-height:50vh; padding:40px 15px 35px;} 
-      .hero h1{font-size:clamp(26px, 7vw, 36px); letter-spacing:1px; line-height:1.2;} 
+      .hero h1{font-size:clamp(31.2px, 8.4vw, 43.2px); letter-spacing:1px; line-height:1.2;} 
       .hero .hero-subtitle{font-size:4vw; line-height:1.4;}
       .hero p{font-size:4.9vw; line-height:1.6; padding:0 5px;}
-      .hero-content{ padding:12px; max-width:95%; }
+      .hero-content{ top:0; padding:12px; max-width:95%; }
       .hero:hover .hero-content{ opacity:1; transform:none; filter:none; pointer-events:auto; }
       .hero:hover .hero-bg{ filter:brightness(0.32); transform:none; }
       
@@ -929,7 +1015,7 @@
       .barattolo-intro{ padding:0; }
       .barattolo-intro-content{ grid-template-columns:1fr; gap:18px; padding:0; } 
       .barattolo-image-pila{ max-width:none; width:100%; margin:0; background:rgba(0,0,0,0.18); display:flex; justify-content:center; } 
-      .barattolo-image-pila video{ height:min(70vh, 520px); width:auto; max-width:100%; object-fit:contain; } 
+      .barattolo-image-pila video{ height:min(75vh, 560px); width:100%; max-width:100%; } 
       .barattolo-text{ text-align:center; padding:40px 15px; } 
       .barattolo-text h2{font-size:6vw;}
       .barattolo-text p{ font-size:3.5vw; line-height:1.6; }
@@ -1004,7 +1090,7 @@
     @media(max-width:600px){ 
       /* Ancora più piccolo per schermi piccoli */
       .hero{min-height:45vh; padding:30px 12px 30px;} 
-      .hero h1{font-size:6.5vw;} 
+      .hero h1{font-size:7.8vw;} 
       .hero .hero-subtitle{font-size:3.8vw;}
       .hero p{font-size:4.48vw;}
       
@@ -1028,7 +1114,7 @@
       .logo-img{ height:35px; }
       
       .hero{min-height:40vh; padding:25px 10px;} 
-      .hero h1{font-size:6vw;} 
+      .hero h1{font-size:7.2vw;} 
       .hero .hero-subtitle{font-size:3.5vw;}
       
       .section-title{ font-size:5.5vw; padding-left:20px; }
@@ -1037,7 +1123,7 @@
       .gallery-item{ width:18vw; height:18vw; max-width:70px; max-height:70px; }
       
       .barattolo-image-pila{max-width:55vw;} 
-      .barattolo-image-pila video{ height:280px; }
+      .barattolo-image-pila video{ height:280px; width:100%; }
       .barattolo-text h2{font-size:5.5vw;}
       
       .nav-menu{ width:85vw; }
@@ -1085,8 +1171,8 @@
 </head>
 <body>
 
-<!-- BACKGROUND MUSIC (default ON; browser may require first interaction to start) -->
-<audio id="bgMusic" preload="auto" loop playsinline autoplay aria-hidden="true" style="display:none;">
+<!-- BACKGROUND MUSIC (default OFF; user can enable via the Music toggle) -->
+<audio id="bgMusic" preload="auto" loop playsinline aria-hidden="true" style="display:none;">
   <source src="assets/audio/music.mp3" type="audio/mpeg">
 </audio>
 
@@ -1178,7 +1264,9 @@
 
 <div class="header-wrapper">
   <header>
-    <img src="assets/extracted/f473fa4a48ae6948929084c736e84f6274322e2d.webp" alt="Badiani Gelato Firenze 1932" class="logo-img">
+    <a class="logo-link" id="logoLink" href="#hero" aria-label="Back to top">
+      <img src="assets/extracted/f473fa4a48ae6948929084c736e84f6274322e2d.webp" alt="Badiani Gelato Firenze 1932" class="logo-img">
+    </a>
 
     <!-- TESTO NEON AL CENTRO -->
     <div class="neon-text" id="beInspiredText">BE INSPIRED</div>
@@ -1187,7 +1275,7 @@
       <a href="#story">Story</a>
       <a href="#products">Products</a>
       <a href="#contact">Contact</a>
-      <button type="button" class="nav-music-toggle" id="musicToggleBtn" aria-pressed="true">Music: On</button>
+      <button type="button" class="nav-music-toggle is-off" id="musicToggleBtn" aria-pressed="false">Music: Off</button>
     </nav>
 
     <div class="menu-toggle" id="menuToggle">
@@ -1463,6 +1551,11 @@
 </div>
 
 <section id="why" class="why">
+  <div class="why-video-bg" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="metadata">
+      <source src="videospesa.mp4" type="video/mp4">
+    </video>
+  </div>
   <h2>Why Choose <span>Badiani</span></h2>
   <div class="benefits">
     <div class="benefit">
@@ -1592,6 +1685,30 @@ navMenu.querySelectorAll('a').forEach(link => {
     document.body.style.overflow = '';
   });
 });
+
+// Click on logo returns to top/hero
+const logoLink = document.getElementById('logoLink');
+if (logoLink) {
+  logoLink.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    // Close mobile menu if open
+    if (menuToggle && navMenu && menuOverlay) {
+      menuToggle.classList.remove('active');
+      navMenu.classList.remove('active');
+      menuOverlay.style.opacity = '0';
+      menuOverlay.style.visibility = 'hidden';
+      document.body.style.overflow = '';
+    }
+
+    const hero = document.getElementById('hero');
+    if (hero && hero.scrollIntoView) {
+      hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+}
 
 // Ensure the distribution CTA always opens the user's mail app
 // (capture-phase so it wins over any future click handlers)
@@ -1848,25 +1965,28 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script>
-// Background music (default ON). Autoplay may be blocked until the first user interaction.
+// Background music (default OFF). User must enable it via the toggle.
 (function setupBackgroundMusic(){
   const audio = document.getElementById('bgMusic');
   const btn = document.getElementById('musicToggleBtn');
   if (!audio || !btn) return;
 
   const STORAGE_KEY = 'badianiMusicEnabled';
-  let enabled = true;
+  // Requirement: always start OFF when entering the site.
+  // (We still write the state so the UI is consistent across reloads.)
+  let enabled = false;
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    enabled = saved === null ? true : saved === 'true';
+    localStorage.setItem(STORAGE_KEY, 'false');
   } catch (e) {
-    enabled = true;
+    // ignore
   }
 
   const TARGET_VOLUME = 0.28;
   const FADE_MS = 650;
 
   audio.volume = 0;
+  audio.muted = true;
+  audio.pause();
 
   function setButtonState(){
     btn.setAttribute('aria-pressed', enabled ? 'true' : 'false');
@@ -1909,6 +2029,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function tryPlay(){
     if (!enabled) return;
     try {
+      audio.muted = false;
       const maybePromise = audio.play();
       if (maybePromise && typeof maybePromise.then === 'function') {
         await maybePromise;
@@ -1923,6 +2044,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function stop(){
     audio.pause();
+    audio.muted = true;
     audio.volume = 0;
   }
 
@@ -1943,7 +2065,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   setButtonState();
-  if (enabled) tryPlay();
+  // Do not autoplay on load.
 })();
 </script>
 

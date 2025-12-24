@@ -905,8 +905,50 @@
     .spec-card:nth-child(odd) .spec-label{ color:var(--badiani-blue); }
     .spec-card:nth-child(even) .spec-label{ color:var(--badiani-pink); }
     .spec-value{ font-size:16px; font-weight:500; color:var(--badiani-gray); line-height:1.4; }
-    .specs-close-btn{ position:fixed; top:18px; right:18px; width:55px; height:55px; background:linear-gradient(135deg, var(--badiani-pink), #ff7ab7); border:none; border-radius:50%; color:#fff; font-size:28px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.3s ease; z-index:10; box-shadow:0 5px 20px rgba(240,103,166,0.5); padding:0; line-height:1; font-family:system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; }
-    .specs-close-btn:hover{ background:linear-gradient(135deg, var(--badiani-blue), #2a4ab0); transform:rotate(90deg) scale(1.1); box-shadow:0 8px 28px rgba(30,57,141,0.6); }
+    .specs-close-btn{
+      --close-icon-size: 22px;
+      --close-icon-stroke: 3px;
+      position:fixed;
+      top:18px;
+      right:18px;
+      width:55px;
+      height:55px;
+      background:linear-gradient(135deg, var(--badiani-pink), #ff7ab7);
+      border:none;
+      border-radius:50%;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:10;
+      box-shadow:0 5px 20px rgba(240,103,166,0.5);
+
+      padding:0;
+      line-height:0;
+      font-size:0;
+      color:transparent;
+      text-shadow:none;
+
+      transform-origin:center;
+      will-change:transform;
+      backface-visibility:hidden;
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .specs-close-btn::before,
+    .specs-close-btn::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:var(--close-icon-size);
+      height:var(--close-icon-stroke);
+      background:#fff;
+      border-radius:999px;
+      transform-origin:center;
+    }
+    .specs-close-btn::before{ transform:translate(-50%, -50%) rotate(45deg); }
+    .specs-close-btn::after{ transform:translate(-50%, -50%) rotate(-45deg); }
+    .specs-close-btn:hover{ background:linear-gradient(135deg, var(--badiani-blue), #2a4ab0); transform:rotate(90deg) scale(1.1) translateZ(0); box-shadow:0 8px 28px rgba(30,57,141,0.6); }
 
     .gallery{ background: #ff6b9d url('assets/barattolo-tab.webp?v=20251222') center/cover no-repeat; padding:90px 20px; text-align:center; position:relative; overflow:hidden; }
     .gallery::before{ content:''; position:absolute; inset:0; background:rgba(255,107,157,0.7); z-index:0; }
@@ -1488,7 +1530,7 @@
       .spec-card{padding:6px 8px;border-radius:6px;border-left-width:3px;}
       .spec-label{font-size:12px;margin-bottom:2px;letter-spacing:0.3px;}
       .spec-value{font-size:14px;line-height:1.2;}
-      .specs-close-btn{top:8px;right:8px;width:40px;height:40px;font-size:20px;padding:0;line-height:1;font-family:system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;}
+      .specs-close-btn{top:8px;right:8px;width:40px;height:40px;font-size:0;padding:0;line-height:0;font-family:system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; --close-icon-size:16px; --close-icon-stroke:2px;}
     }
     
     @media(max-width:600px){ 
@@ -1582,8 +1624,8 @@
 </head>
 <body>
 
-<!-- BACKGROUND MUSIC (default ON; browser may require first interaction to start) -->
-<audio id="bgMusic" preload="auto" loop playsinline autoplay aria-hidden="true" style="display:none;">
+<!-- BACKGROUND MUSIC (default OFF; user can enable via the Music toggle) -->
+<audio id="bgMusic" preload="auto" loop playsinline aria-hidden="true" style="display:none;">
   <source src="assets/audio/music.mp3" type="audio/mpeg">
 </audio>
 
@@ -1686,7 +1728,7 @@
       <a href="#heritage">Heritage</a>
       <a href="#barattolo">Il Barattolo</a>
       <a href="#contact">Contact</a>
-      <button type="button" class="nav-music-toggle" id="musicToggleBtn" aria-pressed="true">Music: On</button>
+      <button type="button" class="nav-music-toggle is-off" id="musicToggleBtn" aria-pressed="false">Music: Off</button>
     </nav>
 
     <div class="menu-toggle" id="menuToggle">
@@ -2128,25 +2170,27 @@ navMenu.querySelectorAll('a').forEach(link => {
   });
 });
 
-// Background music (default ON). Autoplay may be blocked until the first user interaction.
+// Background music (default OFF). User must enable it via the toggle.
 (function setupBackgroundMusic(){
   const audio = document.getElementById('bgMusic');
   const btn = document.getElementById('musicToggleBtn');
   if (!audio || !btn) return;
 
   const STORAGE_KEY = 'badianiMusicEnabled';
-  let enabled = true;
+  // Requirement: always start OFF when entering the site.
+  let enabled = false;
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    enabled = saved === null ? true : saved === 'true';
+    localStorage.setItem(STORAGE_KEY, 'false');
   } catch (e) {
-    enabled = true;
+    // ignore
   }
 
   const TARGET_VOLUME = 0.28;
   const FADE_MS = 650;
 
   audio.volume = 0;
+  audio.muted = true;
+  audio.pause();
 
   function setButtonState(){
     btn.setAttribute('aria-pressed', enabled ? 'true' : 'false');
@@ -2189,6 +2233,7 @@ navMenu.querySelectorAll('a').forEach(link => {
   async function tryPlay(){
     if (!enabled) return;
     try {
+      audio.muted = false;
       const maybePromise = audio.play();
       if (maybePromise && typeof maybePromise.then === 'function') {
         await maybePromise;
@@ -2203,6 +2248,7 @@ navMenu.querySelectorAll('a').forEach(link => {
 
   function stop(){
     audio.pause();
+    audio.muted = true;
     audio.volume = 0;
   }
 
@@ -2223,7 +2269,7 @@ navMenu.querySelectorAll('a').forEach(link => {
   });
 
   setButtonState();
-  if (enabled) tryPlay();
+  // Do not autoplay on load.
 })();
 
 // Ensure the distribution CTA always opens the user's mail app
