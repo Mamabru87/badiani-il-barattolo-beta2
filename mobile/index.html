@@ -136,9 +136,9 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      font-size: 22px;
+      font-size: clamp(16px, 1.6vw, 22px);
       font-weight: 700;
-      letter-spacing: 5px;
+      letter-spacing: clamp(2px, 0.45vw, 5px);
       text-transform: uppercase;
       color: #fff;
       cursor: pointer;
@@ -316,11 +316,11 @@
     }
 
     .header-wrapper{ position:sticky; top:0; z-index:1000; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
-    header{ background:var(--badiani-blue); padding:18px 40px; display:flex; align-items:center; justify-content:space-between; position:relative; }
+    header{ background:var(--badiani-blue); padding:18px clamp(16px, 3.2vw, 40px); display:flex; align-items:center; justify-content:space-between; gap:clamp(10px, 1.6vw, 24px); position:relative; }
     .logo-link{ display:flex; align-items:center; text-decoration:none; }
-    .logo-img{ height:63px; width:auto; object-fit:contain; filter: invert(1) grayscale(1) brightness(200%); mix-blend-mode: screen; }
-    .nav-menu{ display:flex; gap:35px; align-items:center; }
-    .nav-menu a{ color:#fff; text-decoration:none; font-size:16px; letter-spacing:2px; text-transform:uppercase; transition:all 0.3s; padding:12px 20px; border-radius:25px; font-weight:500; }
+    .logo-img{ height:clamp(42px, 4.0vw, 55px); width:auto; object-fit:contain; filter: invert(1) grayscale(1) brightness(200%); mix-blend-mode: screen; }
+    .nav-menu{ display:flex; gap:clamp(12px, 2.4vw, 35px); align-items:center; }
+    .nav-menu a{ color:#fff; text-decoration:none; font-size:clamp(13px, 1.15vw, 16px); letter-spacing:clamp(1px, 0.18vw, 2px); text-transform:uppercase; transition:all 0.3s; padding:clamp(9px, 1.0vw, 12px) clamp(12px, 1.6vw, 20px); border-radius:25px; font-weight:500; }
     .nav-menu a:hover{ background:var(--badiani-pink); transform:translateY(-2px); }
 
     /* Music toggle button inside the nav menu */
@@ -330,11 +330,11 @@
       border:none;
       background:rgba(255,255,255,0.05);
       color:#fff;
-      font-size:16px;
-      letter-spacing:2px;
+      font-size:clamp(13px, 1.15vw, 16px);
+      letter-spacing:clamp(1px, 0.18vw, 2px);
       text-transform:uppercase;
       transition:all 0.3s;
-      padding:12px 20px;
+      padding:clamp(9px, 1.0vw, 12px) clamp(12px, 1.6vw, 20px);
       border-radius:25px;
       font-weight:500;
       font-family:inherit;
@@ -342,7 +342,7 @@
     }
     .nav-menu .nav-music-toggle:hover{ background:var(--badiani-pink); transform:translateY(-2px); }
     .nav-menu .nav-music-toggle.is-off{ background:rgba(255,255,255,0.12); }
-    .nav-menu .nav-music-toggle:focus{ outline:2px solid rgba(240,103,166,0.65); outline-offset:2px; }
+    .nav-menu .nav-music-toggle:focus, .nav-menu .nav-music-toggle:focus-visible{ outline:none; }
 
     .pink-banner{ background:var(--badiani-pink); color:#fff; padding:12px 20px 16px; text-align:center; font-size:15px; letter-spacing:2px; text-transform:uppercase; font-weight:500; line-height:1.5; transition:opacity 0.3s; overflow:hidden; }
     .pink-banner p,
@@ -431,17 +431,17 @@
         filter:brightness(1) saturate(1.1);
         transform: scale(1.05);
     }
-    .hero-content{ position:absolute; top:0; left:50%; transform:translateX(-50%); z-index:2; width:100%; max-width:900px; padding:80px 20px 20px; transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease; }
+    .hero-content{ position:absolute; top:0; left:0; right:0; transform:none; margin:0 auto; z-index:2; width:100%; max-width:900px; padding:clamp(56px, 10vh, 140px) 20px 24px; transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease; }
     .hero:hover .hero-content{
         opacity: 0;
         transform: translateY(-30px) scale(0.95);
         filter: blur(10px);
         pointer-events: none;
     }
-    .hero h1{ font-family:'SuperGroteskDigits', 'SuperGroteskB'; font-size:72px; font-weight:700; letter-spacing:5px; text-transform:uppercase; margin-bottom:18px; }
+    .hero h1{ font-family:'SuperGroteskDigits', 'SuperGroteskB'; font-size:clamp(42px, 6.2vw, 86px); font-weight:700; letter-spacing:clamp(1px, 0.35vw, 5px); text-transform:uppercase; margin-bottom:18px; line-height:1.08; }
     .hero h1 span{ color:var(--badiani-pink); font-style:normal; }
-    .hero .hero-subtitle{ font-family:'SuperGroteskC', 'SuperGroteskA', 'SuperGroteskB', sans-serif; font-size:30px; margin-bottom:15px; font-style:normal; font-weight:500; letter-spacing:1.5px; text-transform:uppercase; font-variant-caps:normal; }
-    .hero p{ font-size:28px; line-height:1.9; font-weight:300; }
+    .hero .hero-subtitle{ font-family:'SuperGroteskC', 'SuperGroteskA', 'SuperGroteskB', sans-serif; font-size:clamp(18px, 2.2vw, 30px); margin-bottom:15px; font-style:normal; font-weight:500; letter-spacing:clamp(0.6px, 0.12vw, 1.5px); text-transform:uppercase; font-variant-caps:normal; line-height:1.25; }
+    .hero p{ font-size:clamp(16px, 1.95vw, 28px); line-height:1.65; font-weight:300; }
 
     /* SEZIONE STORIA CON SFONDO FIRENZE */
     .buontalenti-story{

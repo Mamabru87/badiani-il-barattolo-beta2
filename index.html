@@ -147,15 +147,14 @@
       100% { transform: translateY(30px) scale(0.6); opacity: 0.3; }
     }
 
-    /* TESTO NEON BE INSPIRED NELL'HEADER - INGRANDITO */
+    /* TESTO NEON BE INSPIRED NELL'HEADER - INGRANDITO
+       NOTE: keep it in normal flow to avoid overlapping nav links on windowed desktop sizes. */
     .neon-text{
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 22px;
+      position: static;
+      transform: none;
+      font-size: clamp(16px, 1.6vw, 22px);
       font-weight: 700;
-      letter-spacing: 5px;
+      letter-spacing: clamp(2px, 0.45vw, 5px);
       text-transform: uppercase;
       color: #fff;
       cursor: pointer;
@@ -167,6 +166,28 @@
       animation: neonPulse 2s ease-in-out infinite;
       user-select: none;
       white-space: nowrap;
+      justify-self: center;
+      align-self: center;
+      line-height: 1;
+      max-width: min(44vw, 560px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      z-index: 1;
+    }
+
+    /* Wide / fullscreen desktop: true center of the header (page-centered). */
+    @media (min-width: 1201px){
+      .neon-text{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        text-align: center;
+        max-width: min(46vw, 640px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
     @keyframes neonPulse {
       0%, 100% { 
@@ -191,6 +212,17 @@
         0 0 40px rgba(240,103,166,0.6),
         0 0 50px rgba(240,103,166,0.4),
         0 0 60px rgba(240,103,166,0.3);
+    }
+
+    /* Desktop windowed: when the browser shrinks (but is still in desktop mode),
+       move BE INSPIRED left near the logo so it never touches the nav items. */
+    @media (max-width: 1200px) and (min-width: 901px){
+      .neon-text{
+        justify-self: start;
+        text-align: left;
+        margin-left: clamp(10px, 1.4vw, 18px);
+        max-width: min(32vw, 420px);
+      }
     }
 
     /* CUSTOMIZER MODAL */
@@ -333,14 +365,14 @@
     }
 
     .header-wrapper{ position:sticky; top:0; z-index:1000; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
-    header{ background:var(--badiani-blue); padding:18px 40px; display:flex; align-items:center; justify-content:space-between; position:relative; }
+    header{ background:var(--badiani-blue); padding:18px clamp(16px, 3.2vw, 40px); display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:clamp(10px, 1.6vw, 24px); position:relative; }
     .logo-link{ display:flex; align-items:center; text-decoration:none; cursor:pointer; -webkit-tap-highlight-color: transparent; }
     /* Remove the pink focus ring that appears on click; keep a subtle ring for keyboard navigation only */
     .logo-link:focus{ outline:none; }
     .logo-link:focus-visible{ outline:2px solid rgba(255,255,255,0.6); outline-offset:2px; border-radius:10px; }
-    .logo-img{ height:55px; width:auto; object-fit:contain; filter: invert(1) grayscale(1) brightness(200%); mix-blend-mode: screen; }
-    .nav-menu{ display:flex; gap:35px; align-items:center; }
-    .nav-menu a{ color:#fff; text-decoration:none; font-size:16px; letter-spacing:2px; text-transform:uppercase; transition:all 0.3s; padding:12px 20px; border-radius:25px; font-weight:500; }
+    .logo-img{ height:clamp(42px, 4.0vw, 55px); width:auto; object-fit:contain; filter: invert(1) grayscale(1) brightness(200%); mix-blend-mode: screen; }
+    .nav-menu{ display:flex; gap:clamp(12px, 2.4vw, 35px); align-items:center; justify-self:end; position:relative; z-index:2; }
+    .nav-menu a{ color:#fff; text-decoration:none; font-size:clamp(13px, 1.15vw, 16px); letter-spacing:clamp(1px, 0.18vw, 2px); text-transform:uppercase; transition:all 0.3s; padding:clamp(9px, 1.0vw, 12px) clamp(12px, 1.6vw, 20px); border-radius:25px; font-weight:500; }
     .nav-menu a:hover{ background:var(--badiani-pink); transform:translateY(-2px); }
 
     /* Music toggle button inside the nav menu */
@@ -350,11 +382,11 @@
       border:none;
       background:rgba(255,255,255,0.05);
       color:#fff;
-      font-size:16px;
-      letter-spacing:2px;
+      font-size:clamp(13px, 1.15vw, 16px);
+      letter-spacing:clamp(1px, 0.18vw, 2px);
       text-transform:uppercase;
       transition:all 0.3s;
-      padding:12px 20px;
+      padding:clamp(9px, 1.0vw, 12px) clamp(12px, 1.6vw, 20px);
       border-radius:25px;
       font-weight:500;
       font-family:inherit;
@@ -362,7 +394,7 @@
     }
     .nav-menu .nav-music-toggle:hover{ background:var(--badiani-pink); transform:translateY(-2px); }
     .nav-menu .nav-music-toggle.is-off{ background:rgba(255,255,255,0.12); }
-    .nav-menu .nav-music-toggle:focus{ outline:2px solid rgba(240,103,166,0.65); outline-offset:2px; }
+    .nav-menu .nav-music-toggle:focus, .nav-menu .nav-music-toggle:focus-visible{ outline:none; }
 
     .pink-banner{ background:var(--badiani-pink); color:#fff; padding:12px 20px 16px; text-align:center; font-size:15px; letter-spacing:2px; text-transform:uppercase; font-weight:500; line-height:1.5; transition:opacity 0.3s; overflow:hidden; }
     .pink-banner p,
@@ -432,17 +464,34 @@
         filter:brightness(1) saturate(1.1);
         transform: scale(1.05);
     }
-    .hero-content{ position:absolute; top:15%; left:50%; transform:translateX(-50%); z-index:2; width:100%; max-width:900px; padding:80px 20px 20px; transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease; }
+    .hero-content{ position:absolute; top:50%; left:0; right:0; transform:translateY(-50%); margin:0 auto; z-index:2; width:100%; max-width:900px; padding:20px; transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
     .hero:hover .hero-content{
         opacity: 0;
-        transform: translateY(-30px) scale(0.95);
-        filter: blur(10px);
         pointer-events: none;
     }
-    .hero h1{ font-family:'SuperGroteskDigits', 'SuperGroteskB'; font-size:86px; font-weight:700; letter-spacing:5px; text-transform:uppercase; margin-bottom:18px; }
+    .hero h1{ font-family:'SuperGroteskDigits', 'SuperGroteskB'; font-size:clamp(42px, 6.2vw, 86px); font-weight:700; letter-spacing:clamp(1px, 0.35vw, 5px); text-transform:uppercase; margin-bottom:18px; line-height:1.08; }
     .hero h1 span{ color:var(--badiani-pink); font-style:normal; }
-    .hero .hero-subtitle{ font-family:'SuperGroteskC', 'SuperGroteskA', 'SuperGroteskB', sans-serif; font-size:30px; margin-bottom:15px; font-style:normal; font-weight:500; letter-spacing:1.5px; text-transform:uppercase; font-variant-caps:normal; }
-    .hero p{ font-size:28px; line-height:1.9; font-weight:300; }
+    .hero .hero-subtitle{ font-family:'SuperGroteskC', 'SuperGroteskA', 'SuperGroteskB', sans-serif; font-size:clamp(18px, 2.2vw, 30px); margin-bottom:15px; font-style:normal; font-weight:500; letter-spacing:clamp(0.6px, 0.12vw, 1.5px); text-transform:uppercase; font-variant-caps:normal; line-height:1.25; }
+    .hero p{ font-size:clamp(16px, 1.95vw, 28px); line-height:1.65; font-weight:300; }
+
+    /* Desktop: center the hero copy within the hero section (no always-on transforms to avoid text blur). */
+    @media (min-width: 901px){
+      .hero{
+        display: grid;
+        place-items: center;
+        height: 550px;
+        padding-top: 0;
+      }
+      .hero-content{
+        position: relative;
+        top: 0;
+        left: 0;
+        right: 0;
+        transform: none;
+        margin: 0 auto;
+        padding: 20px;
+      }
+    }
 
     /* SEZIONE STORIA CON SFONDO FIRENZE */
     .buontalenti-story{
@@ -979,7 +1028,7 @@
         text-align:left;
         letter-spacing:1px;
       }
-      header{padding:12px 15px;} 
+      header{padding:12px 15px; display:flex; justify-content:space-between;} 
       .logo-img{height:40px;} 
       
       /* Hero proporzionato */
@@ -1134,7 +1183,8 @@
       .stat-num{ font-size:9vw; }
     }
 
-    /* HERO BG: full-width photo (no crop). The image defines the hero height. */
+    /* HERO BG: full-width photo (no crop).
+       The <img> defines the hero height (no cropping). */
     .hero{
       height:auto;
       padding:0;
@@ -1157,6 +1207,31 @@
       width:100%;
       height:auto;
       max-width:none;
+    }
+
+    /* Desktop: center ONLY the text block within the hero (image stays unchanged). */
+    @media (min-width: 901px){
+      .hero{
+        display:grid;
+        align-items:center;
+        justify-items:center;
+      }
+      .hero .hero-bg{
+        grid-area: 1 / 1;
+        align-self:stretch;
+        justify-self:stretch;
+      }
+      .hero-content{
+        position:relative;
+        top:auto;
+        left:auto;
+        right:auto;
+        margin:0 auto;
+        padding:clamp(18px, 4vh, 52px) 20px 24px;
+        grid-area: 1 / 1;
+        align-self:center;
+        justify-self:center;
+      }
     }
 
     /* No hover zoom */
