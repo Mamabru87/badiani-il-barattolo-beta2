@@ -4,6 +4,28 @@
   <meta charset="UTF-8">
   <title>Badiani Il Barattolo — Iconic Italian Gelato for Retail</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script>
+    // iPad/tablet requirement: show the DESKTOP layout (no responsive deformation) in both orientations.
+    // We do this by giving iPad Safari a fixed, desktop-like layout viewport so mobile breakpoints don't trigger.
+    (function () {
+      try {
+        var ua = navigator.userAgent || '';
+        var isIPad = /iPad/.test(ua);
+        // iPadOS 13+ reports as Macintosh; detect via touch points.
+        var isIPadOS = !isIPad && /Macintosh/.test(ua) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+        if (!isIPad && !isIPadOS) return;
+
+        var meta = document.querySelector('meta[name="viewport"]');
+        if (!meta) return;
+
+        // 1366 matches iPad Pro landscape CSS width and keeps the desktop header/nav stable.
+        meta.setAttribute('content', 'width=1366, initial-scale=1, viewport-fit=cover');
+        document.documentElement.classList.add('force-desktop-on-tablet');
+      } catch (e) {
+        // no-op
+      }
+    })();
+  </script>
   <style>
     @font-face {
   font-family: 'SuperGroteskB';
@@ -123,7 +145,7 @@
       --bg-light:#f8f8f8; 
     }
     *{margin:0;padding:0;box-sizing:border-box;}
-    html{scroll-behavior:smooth;}
+    html{scroll-behavior:smooth; -webkit-text-size-adjust:100%; text-size-adjust:100%;}
 
     body, html {
       cursor: url('data:image/svg+xml;utf8,<svg width="45" height="45" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.5"/></filter></defs><g transform="translate(20, 20) rotate(20) translate(-20, -20)" filter="url(%23shadow)"><path d="M20 38 L 12 16 L 28 16 Z" fill="%23F4CB93" stroke="%23CF9052" stroke-width="0.5"/><line x1="14.5" y1="22" x2="25.5" y2="22" stroke="%23CF9052" stroke-width="0.5" opacity="0.5"/><line x1="16" y1="28" x2="24" y2="28" stroke="%23CF9052" stroke-width="0.5" opacity="0.5"/><circle id="scoop1" cx="15.5" cy="13" r="6" fill="%233d2314" stroke="%232a1810" stroke-width="0.5"/><circle id="scoop2" cx="24.5" cy="12.5" r="6" fill="%23f067a6" stroke="%23cc4882" stroke-width="0.5"/><circle cx="26" cy="11" r="1" fill="%23fff" opacity="0.4"/></g></svg>') 10 10, auto;

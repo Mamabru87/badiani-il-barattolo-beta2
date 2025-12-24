@@ -4,6 +4,23 @@
   <meta charset="UTF-8">
   <title>Badiani Il Barattolo — Iconic Italian Gelato for Retail</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script>
+    // Tablet/iPad must use the desktop version (no mobile redesign on iPad).
+    (function () {
+      try {
+        var ua = navigator.userAgent || '';
+        var isIPad = /iPad/.test(ua);
+        var isIPadOS = !isIPad && /Macintosh/.test(ua) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+        if (!isIPad && !isIPadOS) return;
+        var target = '../index.html' + (location.search || '') + (location.hash || '');
+        if (location.pathname.indexOf('/mobile/') !== -1) {
+          location.replace(target);
+        }
+      } catch (e) {
+        // no-op
+      }
+    })();
+  </script>
   <style>
     @font-face {
   font-family: 'SuperGroteskB';
