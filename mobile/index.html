@@ -315,7 +315,7 @@
       line-height:1.6;
     }
 
-    .header-wrapper{ position:sticky; top:0; z-index:1000; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+    .header-wrapper{ position:sticky; top:0; z-index:1000; box-shadow:0 2px 10px rgba(0,0,0,0.1); will-change: transform; backface-visibility: hidden; perspective: 1000px; }
     header{ background:var(--badiani-blue); padding:18px clamp(16px, 3.2vw, 40px); display:flex; align-items:center; justify-content:space-between; gap:clamp(10px, 1.6vw, 24px); position:relative; }
     .logo-link{ display:flex; align-items:center; text-decoration:none; }
     .logo-img{ height:clamp(42px, 4.0vw, 55px); width:auto; object-fit:contain; filter: invert(1) grayscale(1) brightness(200%); mix-blend-mode: screen; }
