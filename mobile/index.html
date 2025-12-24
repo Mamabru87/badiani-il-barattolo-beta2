@@ -2127,16 +2127,19 @@ menuToggle.addEventListener('click', () => {
   menuToggle.classList.toggle('active');
   navMenu.classList.toggle('active');
   const scrollBanner = document.getElementById('scrollBanner');
+  const pinkBanner = document.querySelector('.pink-banner');
   if(navMenu.classList.contains('active')){
     menuOverlay.style.opacity = '1';
     menuOverlay.style.visibility = 'visible';
     document.body.style.overflow = 'hidden';
-    if(scrollBanner) scrollBanner.style.zIndex = '0';
+    if(scrollBanner) scrollBanner.style.zIndex = '-1';
+    if(pinkBanner) pinkBanner.style.zIndex = '-1';
   } else {
     menuOverlay.style.opacity = '0';
     menuOverlay.style.visibility = 'hidden';
     document.body.style.overflow = '';
     if(scrollBanner) scrollBanner.style.zIndex = '';
+    if(pinkBanner) pinkBanner.style.zIndex = '';
   }
 });
 
