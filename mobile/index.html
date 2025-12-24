@@ -806,6 +806,9 @@
     .card-img::after{ display:none; }
     .card-img .card-btn{ position:absolute; bottom:18px; left:50%; transform:translateX(-50%) translateY(50px); background:rgba(30,57,141,0.95); color:#fff; padding:12px 28px; border-radius:25px; font-size:15px; letter-spacing:1.2px; text-transform:uppercase; opacity:0; transition:all 0.35s ease; pointer-events:none; font-weight:600; box-shadow:0 6px 22px rgba(30,57,141,0.35); text-decoration:none; display:inline-block; }
     .card-img:hover .card-btn{ transform:translateX(-50%) translateY(0); opacity:1; }
+    @media (hover: none) and (pointer: coarse) {
+      .card-img:hover .card-btn { transform:translateX(-50%) translateY(50px); opacity:0; }
+    }
      /* Image: render fully, no cropping; container grows to fit image height. */
     .card-img img{
       position:relative;
