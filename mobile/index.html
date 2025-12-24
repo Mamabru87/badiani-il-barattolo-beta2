@@ -552,7 +552,7 @@
     .heritage > *{ position:relative; z-index:1; }
     .heritage h2{
       --heading-square-size: 1em;
-      --heading-square-offset: 0.35em;
+      --heading-square-offset: 0.55em;
       position:relative;
       display:inline-block;
       padding-left:calc(var(--heading-square-size) + var(--heading-square-offset));
@@ -1494,6 +1494,8 @@
       /* Heritage proporzionato - compact */
       .heritage{ padding:24px 12px; }
       .heritage h2{
+        /* Mobile-only: bring the square closer to the first letter */
+        --heading-square-offset: 0.38em;
         font-size:clamp(16px, 5.2vw, 22px);
         margin-bottom:8px;
         padding-left:calc(var(--heading-square-size, 1em) + var(--heading-square-offset, 0.55em));
