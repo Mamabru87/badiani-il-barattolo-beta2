@@ -344,7 +344,7 @@
     .nav-menu .nav-music-toggle.is-off{ background:rgba(255,255,255,0.12); }
     .nav-menu .nav-music-toggle:focus, .nav-menu .nav-music-toggle:focus-visible{ outline:none; }
 
-    .pink-banner{ background:var(--badiani-pink); color:#fff; padding:12px 20px 16px; text-align:center; font-size:15px; letter-spacing:2px; text-transform:uppercase; font-weight:500; line-height:1.5; transition:opacity 0.3s; overflow:hidden; z-index:1; }
+    .pink-banner{ background:var(--badiani-pink); color:#fff; padding:12px 20px 16px; text-align:center; font-size:15px; letter-spacing:2px; text-transform:uppercase; font-weight:500; line-height:1.5; transition:opacity 0.3s; overflow:hidden; position:relative; z-index:1; }
     .pink-banner p,
     .pink-banner #bannerCurrent{ 
       margin:3px 0; 
@@ -1106,7 +1106,7 @@
         box-shadow:-10px 0 30px rgba(0,0,0,0.5);
         gap:10px;
         align-items:stretch;
-        z-index:999;
+        z-index:9999;
         overflow-y:auto;
         border-radius:16px 0 0 16px;
       } 
@@ -2126,14 +2126,17 @@ document.body.appendChild(menuOverlay);
 menuToggle.addEventListener('click', () => {
   menuToggle.classList.toggle('active');
   navMenu.classList.toggle('active');
+  const scrollBanner = document.getElementById('scrollBanner');
   if(navMenu.classList.contains('active')){
     menuOverlay.style.opacity = '1';
     menuOverlay.style.visibility = 'visible';
     document.body.style.overflow = 'hidden';
+    if(scrollBanner) scrollBanner.style.zIndex = '0';
   } else {
     menuOverlay.style.opacity = '0';
     menuOverlay.style.visibility = 'hidden';
     document.body.style.overflow = '';
+    if(scrollBanner) scrollBanner.style.zIndex = '';
   }
 });
 
