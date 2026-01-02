@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Badiani Il Barattolo — Iconic Italian Gelato for Retail</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="assets/i18n.js" defer></script>
   <script>
     // iPad/tablet requirement: show the DESKTOP layout (no responsive deformation) in both orientations.
     // We do this by giving iPad Safari a fixed, desktop-like layout viewport so mobile breakpoints don't trigger.
@@ -1701,24 +1702,36 @@ const specsData = {
 let selectedFlavor1 = { color: '#3d2314', stroke: '#2a1810' };
 let selectedFlavor2 = { color: '#f067a6', stroke: '#cc4882' };
 
+let __lastOpenedSpecs = null;
 
-function openSpecs(productId, title) {
+function renderSpecs(productId, title) {
   const overlay = document.getElementById('specsOverlay');
   const overlayImage = document.getElementById('overlayImage');
   const overlayTitle = document.getElementById('overlayTitle');
   const overlaySpecsContent = document.getElementById('overlaySpecsContent');
   const data = specsData[productId];
+  if (!overlay || !overlayImage || !overlayTitle || !overlaySpecsContent || !data) return;
 
   overlayImage.src = data.image;
   overlayTitle.textContent = title;
 
+  const i18n = window.BadianiI18n;
   let specsHTML = '';
   data.specs.forEach(spec => {
-    specsHTML += `<div class="spec-card"><span class="spec-label">${spec.label.toUpperCase()}</span><span class="spec-value">${spec.value}</span></div>`;
+    const labelKey = i18n && i18n.translateSpecLabelLabelToKey ? i18n.translateSpecLabelLabelToKey(spec.label) : null;
+    const label = labelKey && i18n && i18n.t ? i18n.t(labelKey) : spec.label;
+    const value = i18n && i18n.translateSpecValue ? i18n.translateSpecValue(productId, spec.label, spec.value) : spec.value;
+    specsHTML += `<div class="spec-card"><span class="spec-label">${String(label).toUpperCase()}</span><span class="spec-value">${value}</span></div>`;
   });
   overlaySpecsContent.innerHTML = specsHTML;
+}
 
-  overlay.classList.add('active');
+function openSpecs(productId, title) {
+  __lastOpenedSpecs = { productId, title };
+  renderSpecs(productId, title);
+
+  const overlay = document.getElementById('specsOverlay');
+  if (overlay) overlay.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
@@ -1733,6 +1746,15 @@ function closeSpecsOnBackground(event) {
   if(event.target.id === 'specsOverlay' || event.target.classList.contains('specs-overlay-bg')) {
     closeSpecs(event);
   }
+}
+
+// If the language changes while the specs overlay is open, re-render the labels.
+if (window.BadianiI18n && window.BadianiI18n.onChange) {
+  window.BadianiI18n.onChange(() => {
+    const overlay = document.getElementById('specsOverlay');
+    if (!overlay || !overlay.classList.contains('active') || !__lastOpenedSpecs) return;
+    renderSpecs(__lastOpenedSpecs.productId, __lastOpenedSpecs.title);
+  });
 }
 
 document.addEventListener('keydown', function(e) {
@@ -2088,7 +2110,16 @@ document.addEventListener('DOMContentLoaded', () => {
   function setButtonState(){
     btn.setAttribute('aria-pressed', enabled ? 'true' : 'false');
     btn.classList.toggle('is-off', !enabled);
-    btn.textContent = enabled ? 'Music: On' : 'Music: Off';
+    if (window.BadianiI18n && window.BadianiI18n.t) {
+      btn.textContent = enabled ? window.BadianiI18n.t('music.on') : window.BadianiI18n.t('music.off');
+    } else {
+      btn.textContent = enabled ? 'Music: On' : 'Music: Off';
+    }
+  }
+
+  // Keep label synced when language changes.
+  if (window.BadianiI18n && window.BadianiI18n.onChange) {
+    window.BadianiI18n.onChange(setButtonState);
   }
 
   function fadeTo(volume, ms){
