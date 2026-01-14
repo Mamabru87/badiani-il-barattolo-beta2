@@ -6,6 +6,30 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <script src="assets/i18n.js" defer></script>
   <script>
+    // Redirect mobile handsets to the dedicated /mobile experience (keep iPad on desktop).
+    (function () {
+      try {
+        var ua = navigator.userAgent || '';
+        var isIPad = /iPad/.test(ua);
+        var isIPadOS = !isIPad && /Macintosh/.test(ua) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+        if (isIPad || isIPadOS) return;
+
+        var isMobileUA = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(ua);
+        var isSmallTouch = ("maxTouchPoints" in navigator) && navigator.maxTouchPoints > 1 && window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
+        var alreadyOnMobile = location.pathname.indexOf('/mobile/') !== -1;
+
+        if ((isMobileUA || isSmallTouch) && !alreadyOnMobile) {
+          var target = new URL('mobile/', window.location.href);
+          target.search = window.location.search;
+          target.hash = window.location.hash;
+          window.location.replace(target.toString());
+        }
+      } catch (e) {
+        // no-op
+      }
+    })();
+  </script>
+  <script>
     // iPad/tablet requirement: show the DESKTOP layout (no responsive deformation) in both orientations.
     // We do this by giving iPad Safari a fixed, desktop-like layout viewport so mobile breakpoints don't trigger.
     (function () {
