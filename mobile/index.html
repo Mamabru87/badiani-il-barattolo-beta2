@@ -1178,14 +1178,21 @@
       .section-divider.visible{ display:none; }
       
       /* Titoli sezione */
-      .section-title{
-        font-size:6vw;
+      .section-title,
+      .story-title,
+      .heritage h2,
+      .contact h2{
+        --heading-square-size: 0.9em;
+        --heading-square-offset: 0.38em;
+        font-size:clamp(20px, 6.2vw, 26px);
         letter-spacing:0.5px;
-        padding-left:calc(var(--heading-square-size, 1em) + var(--heading-square-offset, 0.55em));
+      }
+      .section-title{
+        padding-left:calc(var(--heading-square-size, 0.9em) + var(--heading-square-offset, 0.38em));
       }
       .section-title::before{
-        width:var(--heading-square-size, 1em);
-        height:var(--heading-square-size, 1em);
+        width:var(--heading-square-size, 0.9em);
+        height:var(--heading-square-size, 0.9em);
       }
       .section-subtitle{ font-size:3.5vw; padding:0 15px; }
       
@@ -1318,8 +1325,7 @@
       /* Contact proporzionato */
       .contact{ padding:40px 15px; }
       .contact h2{
-        font-size:6vw;
-        padding-left:calc(var(--heading-square-size, 1em) + var(--heading-square-offset, 0.38em));
+        padding-left:calc(var(--heading-square-size, 0.9em) + var(--heading-square-offset, 0.38em));
       }
       .contact p{ font-size:4vw; padding:0 10px; }
       .contact p.highlight{ font-size:4.5vw; }
@@ -1338,15 +1344,13 @@
       /* Heritage proporzionato - compact */
       .heritage{ padding:24px 12px; }
       .heritage h2{
-        /* Mobile-only: bring the square closer to the first letter */
-        --heading-square-offset: 0.38em;
-        font-size:clamp(16px, 5.2vw, 22px);
+        /* Keep square size aligned with other headings */
         margin-bottom:8px;
-        padding-left:calc(var(--heading-square-size, 1em) + var(--heading-square-offset, 0.55em));
+        padding-left:calc(var(--heading-square-size, 0.9em) + var(--heading-square-offset, 0.38em));
       }
       .heritage h2::before{
-        width:var(--heading-square-size, 1em);
-        height:var(--heading-square-size, 1em);
+        width:var(--heading-square-size, 0.9em);
+        height:var(--heading-square-size, 0.9em);
       }
       .heritage p{ font-size:clamp(15px, 4vw, 17px); line-height:1.5; }
       .story-lead{ font-size:clamp(15px, 4.2vw, 17px); line-height:1.5; padding:0 6px; }
@@ -1512,13 +1516,21 @@
       .hero h1{font-size:6vw;} 
       .hero .hero-subtitle{font-size:3.5vw;}
       
+      .section-title,
+      .story-title,
+      .heritage h2,
+      .contact h2{
+        --heading-square-size: 0.9em;
+        --heading-square-offset: 0.38em;
+        font-size:clamp(18px, 6vw, 24px);
+        letter-spacing:0.5px;
+      }
       .section-title{
-        font-size:5.5vw;
-        padding-left:calc(var(--heading-square-size, 1em) + var(--heading-square-offset, 0.55em));
+        padding-left:calc(var(--heading-square-size, 0.9em) + var(--heading-square-offset, 0.38em));
       }
       .section-title::before{
-        width:var(--heading-square-size, 1em);
-        height:var(--heading-square-size, 1em);
+        width:var(--heading-square-size, 0.9em);
+        height:var(--heading-square-size, 0.9em);
       }
       
       .gallery-item{ width:18vw; height:18vw; max-width:70px; max-height:70px; }
