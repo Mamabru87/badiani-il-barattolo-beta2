@@ -149,10 +149,10 @@
 
       'contact.title': 'Partner With Badiani',
       'contact.highlight': 'Bring the authentic taste of Florence to your customers',
-      'contact.cta': 'Request Distribution Info',
+      'contact.cta': 'REQUEST SAMPLES AND PRICES NOW',
       'contact.ctaAria': 'Request distribution information via email',
 
-      'footer.html': '&copy; {year} <span>Badiani Gelato Firenze 1932</span> &middot; Manufactured by G7 s.r.l., Via Romagnoli 19, Bentivoglio (BO) Italy',
+      'footer.html': '&copy; {year} <span>Badiani Gelato Firenze 1932</span> &middot; MADE in Italy',
 
       'spec.productCode': 'Product Code',
       'spec.description': 'Description',
@@ -310,10 +310,10 @@
 
       'contact.title': 'Collabora con Badiani',
       'contact.highlight': 'Porta il gusto autentico di Firenze ai tuoi clienti',
-      'contact.cta': 'Richiedi info distribuzione',
+      'contact.cta': 'RICHIEDI CAMPIONI E PREZZI ORA',
       'contact.ctaAria': 'Richiedi informazioni sulla distribuzione via email',
 
-      'footer.html': '&copy; {year} <span>Badiani Gelato Firenze 1932</span> &middot; Prodotto da G7 s.r.l., Via Romagnoli 19, Bentivoglio (BO) Italia',
+      'footer.html': '&copy; {year} <span>Badiani Gelato Firenze 1932</span> &middot; MADE in Italy',
 
       'spec.productCode': 'Codice prodotto',
       'spec.description': 'Descrizione',
@@ -471,10 +471,10 @@
 
       'contact.title': 'Colabora con Badiani',
       'contact.highlight': 'Lleva el auténtico sabor de Florencia a tus clientes',
-      'contact.cta': 'Solicitar info de distribución',
+      'contact.cta': 'SOLICITA MUESTRAS Y PRECIOS AHORA',
       'contact.ctaAria': 'Solicitar información de distribución por email',
 
-      'footer.html': '&copy; {year} <span>Badiani Gelato Firenze 1932</span> &middot; Fabricado por G7 s.r.l., Via Romagnoli 19, Bentivoglio (BO) Italia',
+      'footer.html': '&copy; {year} <span>Badiani Gelato Firenze 1932</span> &middot; MADE in Italy',
 
       'spec.productCode': 'Código de producto',
       'spec.description': 'Descripción',
@@ -632,10 +632,10 @@
 
       'contact.title': 'Devenez partenaire Badiani',
       'contact.highlight': 'Apportez le goût authentique de Florence à vos clients',
-      'contact.cta': 'Demander les infos distribution',
+      'contact.cta': 'DEMANDEZ DES ÉCHANTILLONS ET LES PRIX MAINTENANT',
       'contact.ctaAria': 'Demander les informations de distribution par email',
 
-      'footer.html': '&copy; {year} <span>Badiani Gelato Firenze 1932</span> &middot; Fabriqué par G7 s.r.l., Via Romagnoli 19, Bentivoglio (BO) Italie',
+      'footer.html': '&copy; {year} <span>Badiani Gelato Firenze 1932</span> &middot; MADE in Italy',
 
       'spec.productCode': 'Code produit',
       'spec.description': 'Description',
@@ -897,9 +897,30 @@
       menu.appendChild(item);
     });
 
+    function positionMenu() {
+      const rect = btn.getBoundingClientRect();
+      const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+      // Use fixed positioning so the menu isn't clipped by mobile nav overflow.
+      menu.style.position = 'fixed';
+      const top = Math.min(rect.bottom + 10, vh - 10);
+      menu.style.top = `${top}px`;
+
+      // Clamp horizontally within the viewport.
+      const menuWidth = menu.offsetWidth || 180;
+      const minLeft = 10;
+      const maxLeft = Math.max(minLeft, vw - menuWidth - 10);
+      const desiredLeft = rect.left;
+      const left = Math.min(Math.max(desiredLeft, minLeft), maxLeft);
+      menu.style.left = `${left}px`;
+      menu.style.right = 'auto';
+    }
+
     function openMenu() {
       menu.classList.add('is-open');
       btn.setAttribute('aria-expanded', 'true');
+      positionMenu();
     }
 
     function closeMenu() {
@@ -924,6 +945,14 @@
       if (tEl && wrap.contains(tEl)) return;
       closeMenu();
     });
+
+    window.addEventListener('resize', () => {
+      if (menu.classList.contains('is-open')) positionMenu();
+    });
+
+    window.addEventListener('scroll', () => {
+      if (menu.classList.contains('is-open')) positionMenu();
+    }, { passive: true });
 
     document.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape') return;
