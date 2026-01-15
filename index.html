@@ -718,6 +718,18 @@
       filter: brightness(0.75) saturate(1.1);
       transform: translateZ(0);
     }
+    /* Desktop: let the video scale down with the section without cropping */
+    @media (min-width: 901px){
+      .why .why-video-bg{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      }
+      .why .why-video-bg video{
+        object-fit:contain;
+        object-position:center center;
+      }
+    }
     /* Optional tint to keep text readable */
     .why .why-video-bg::after{
       content:"";
