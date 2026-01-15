@@ -901,8 +901,35 @@
       const rect = btn.getBoundingClientRect();
       const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
       const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+      const isMobile = window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
+      const navMenu = document.getElementById('navMenu');
+      const navIsOpen = navMenu && navMenu.classList.contains('active');
 
-      // Use fixed positioning so the menu isn't clipped by mobile nav overflow.
+      if (isMobile && navIsOpen && navMenu) {
+        // Keep the dropdown inside the mobile menu so it scrolls naturally with it.
+        menu.style.position = 'absolute';
+        menu.style.left = '0';
+        menu.style.right = 'auto';
+
+        // Position below the button, but flip above if it would overflow the menu.
+        const btnOffsetTop = wrap.offsetTop;
+        const belowTop = btnOffsetTop + wrap.offsetHeight + 10;
+        const menuHeight = menu.offsetHeight || 160;
+        const visibleBottom = navMenu.scrollTop + navMenu.clientHeight;
+        const fitsBelow = belowTop + menuHeight <= visibleBottom;
+        const aboveTop = btnOffsetTop - menuHeight - 10;
+
+        if (fitsBelow || aboveTop < navMenu.scrollTop) {
+          menu.style.top = `${belowTop}px`;
+          menu.style.bottom = 'auto';
+        } else {
+          menu.style.top = `${aboveTop}px`;
+          menu.style.bottom = 'auto';
+        }
+        return;
+      }
+
+      // Desktop (or when mobile menu is not open): use fixed positioning in viewport.
       menu.style.position = 'fixed';
       const top = Math.min(rect.bottom + 10, vh - 10);
       menu.style.top = `${top}px`;
@@ -915,6 +942,7 @@
       const left = Math.min(Math.max(desiredLeft, minLeft), maxLeft);
       menu.style.left = `${left}px`;
       menu.style.right = 'auto';
+      menu.style.bottom = 'auto';
     }
 
     function openMenu() {
