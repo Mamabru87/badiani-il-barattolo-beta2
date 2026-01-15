@@ -336,9 +336,18 @@
     .stat-label{ font-size:16px; text-transform:uppercase; letter-spacing:2px; opacity:0.95; font-weight:500; }
 
     .global-presence{ width:100%; padding:0; line-height:1; background:#1f4495 url('worldwide.webp?v=20251222') center/contain no-repeat; position:relative; aspect-ratio: 8 / 3; overflow:hidden; }
-    /* Desktop: reduce height by ~30% */
+    /* Desktop: increase height by 20% and scale headline proportionally */
     @media (min-width: 901px){
-      .global-presence{ aspect-ratio: 8 / 2.1; }
+      .global-presence{ aspect-ratio: 8 / 2.52; }
+      .global-presence-headline .world-means-title .wmt-top{
+        font-size:clamp(21.6px, 3.888vw, 54.72px);
+      }
+      .global-presence-headline .world-means-title .wmt-mid{
+        font-size:clamp(14.4px, 1.872vw, 36px);
+      }
+      .global-presence-headline .world-means-title .wmt-bottom{
+        font-size:clamp(67.392px, 11.7936vw, 183.456px);
+      }
     }
     /* Darken only the top area of the image for title readability */
     .global-presence::before{
