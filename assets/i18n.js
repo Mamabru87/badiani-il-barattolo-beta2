@@ -63,7 +63,7 @@
       'banner.contact': "partner with us · bring florence to your customers · let's grow together",
 
       'story.title': 'Buontalenti: The Cream That Made History',
-      'story.titleHtml': '<span class="story-title-main">Buontalenti: The Cream</span> <span class="story-title-sub">That Made History</span>',
+      'story.titleHtml': '<span class="story-title-main">Buontalenti:</span><br><span class="story-title-sub">The Cream That Made History</span>',
       'story.lead': 'In the 1960s, in Florence, Badiani dedicated a special flavour to Bernardo Buontalenti, the Renaissance architect to whom tradition attributes the birth of gelato in the 16th century.',
       'story.leadHtml': 'In the 1960s, in Florence, Badiani dedicated a special flavour to <span class="highlight-pink">Bernardo Buontalenti</span>, the Renaissance architect to whom tradition attributes the birth of <span class="highlight-pink">gelato</span> in the 16th century.',
       'story.tl.origin': 'The Origin',
@@ -840,10 +840,10 @@
         .lang-switcher__btn{
           width:auto;
           justify-content:center;
-          font-size:11px;
-          padding:8px 10px;
-          border-radius:20px;
-          letter-spacing:0.8px;
+          font-size:10px;
+          padding:6px 8px;
+          border-radius:18px;
+          letter-spacing:0.7px;
         }
         .lang-switcher__menu{
           position:absolute;
