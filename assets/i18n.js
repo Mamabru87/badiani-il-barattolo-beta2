@@ -1146,6 +1146,11 @@
     bindings.push(() => {
       const el = document.querySelector('#story .story-title');
       if (!el) return;
+      const isMobile = window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
+      if (isMobile) {
+        el.innerHTML = t('story.titleHtml');
+        return;
+      }
       if (el.querySelector('.story-title-main')) {
         el.innerHTML = t('story.titleHtml');
       } else {
