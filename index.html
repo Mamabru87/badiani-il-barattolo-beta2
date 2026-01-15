@@ -718,7 +718,7 @@
       filter: brightness(0.75) saturate(1.1);
       transform: translateZ(0);
     }
-    /* Desktop: let the video scale down with the section without cropping */
+    /* Desktop: fill the section at normal sizes, keep video centered */
     @media (min-width: 901px){
       .why .why-video-bg{
         display:flex;
@@ -726,8 +726,14 @@
         justify-content:center;
       }
       .why .why-video-bg video{
-        object-fit:contain;
+        object-fit:cover;
         object-position:center center;
+      }
+    }
+    /* Smaller desktop heights: avoid excessive cropping */
+    @media (min-width: 901px) and (max-height: 720px){
+      .why .why-video-bg video{
+        object-fit:contain;
       }
     }
     /* Optional tint to keep text readable */
