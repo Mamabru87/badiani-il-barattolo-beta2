@@ -168,41 +168,7 @@
 
     
 
-    .pink-banner{ background:var(--badiani-pink); color:#fff; padding:12px 20px 16px; text-align:center; font-size:15px; letter-spacing:2px; text-transform:uppercase; font-weight:500; line-height:1.5; transition:opacity 0.3s; overflow:hidden; position:relative; z-index:1; }
-    .pink-banner p,
-    .pink-banner #bannerCurrent{ 
-      margin:3px 0; 
-      min-height:18px; 
-      /* force lowercase and use SuperGrotesk Regular */
-      text-transform: lowercase;
-      font-family: 'SuperGroteskDigits', 'SuperGroteskLower', 'SuperGroteskA', 'SuperGroteskB', sans-serif;
-      font-weight: 400;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Continuous ticker inside pink banner */
-    .banner-ticker{ width:100%; }
-    .banner-ticker__viewport{ overflow:hidden; width:100%; }
-    .banner-ticker__track{
-      display:inline-flex;
-      align-items:center;
-      white-space:nowrap;
-      will-change:transform;
-      animation: bannerTicker var(--banner-ticker-duration, 38s) linear infinite;
-    }
-    .banner-ticker__sequence{ display:inline-flex; align-items:center; }
-    .banner-item{ font-size:1.1em; }
-    .banner-sep{ padding:0 0.6rem; opacity:0.95; }
-
-    @keyframes bannerTicker{
-      from{ transform: translateX(0); }
-      to{ transform: translateX(-50%); }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .banner-ticker__track{ animation: none; transform: none; }
-    }
+    /* marquee/ticker removed */
 
     @media (prefers-reduced-motion: reduce){
       .global-presence-bg img{ transition: none !important; }
@@ -212,22 +178,6 @@
       .global-presence-scroll-hint{ transition: none !important; }
     }
     /* single-line banner: #bannerNext removed */
-
-    .section-divider{
-      background:linear-gradient(135deg, var(--badiani-pink) 0%, #ff7ab7 100%);
-      color:#fff;
-      padding:14px 20px;
-      text-align:center;
-      font-family:'SuperGroteskDigits', 'SuperGroteskLower', 'SuperGroteskA', sans-serif;
-      font-size:14px;
-      letter-spacing:2px;
-      text-transform:none;
-      box-shadow:0 2px 8px rgba(240,103,166,0.3);
-      font-weight:400;
-      transition:all 0.5s ease;
-      display: none;
-    }
-    .section-divider.visible{ display:block; }
 
     /* Linee divisorie rosa tra le sezioni */
     section:not(#hero) {
@@ -1171,13 +1121,8 @@
         box-shadow:0 8px 22px rgba(240,103,166,0.28);
       }
       
-      /* Banner e divider */
-      .pink-banner{ padding:10px 12px; font-size:3.6vw; letter-spacing:1px; }
-      .pink-banner p,
-      .pink-banner #bannerCurrent{ font-size:3.6vw; min-height:16px; }
-      .section-divider{ padding:10px 12px; font-size:2.8vw; letter-spacing:1px; }
-      /* These dividers are repeated many times and increase scroll on mobile */
-      .section-divider.visible{ display:none; }
+      /* Divider */
+      /* Dividers removed */
       
       /* Titoli sezione */
       .section-title,
@@ -1595,7 +1540,6 @@
     }
 
     /* Elimina lo spazietto tra barra rosa e foto hero (seam da sub-pixel) */
-    #scrollBanner{ margin-bottom: 0; }
     #hero{ margin-top: -1px; }
   </style>
 </head>
@@ -1619,12 +1563,8 @@
       <span></span>
     </div>
   </header>
-  <div class="pink-banner" id="scrollBanner">
-    <div id="bannerCurrent" class="banner-ticker" aria-live="polite"></div>
-  </div>
 </div>
 
-<div class="section-divider-data" data-section="hero" data-text="iconic italian gelato &middot; since 1932 &middot; from florence with love"></div>
 
 <section id="hero" class="hero">
   <div class="hero-bg" aria-hidden="true">
@@ -1638,11 +1578,6 @@
   </div>
 </section>
 
-<div class="section-divider-data" data-section="products" data-text="award-winning flavours &middot; classico &middot; pistacchio &middot; dolcevita"></div>
-
-<div class="section-divider visible">
-  <p>award-winning flavours &middot; classico &middot; pistacchio &middot; dolcevita</p>
-</div>
 
 <section id="products" class="products">
   <h2 class="section-title">Premium <span>Collection</span></h2>
@@ -1721,7 +1656,6 @@
   </div>
 </section>
 
-<div class="section-divider-data" data-section="story" data-text="the renaissance of gelato &middot; born in florence 1932 &middot; tradition meets innovation"></div>
 
 <section id="story" class="buontalenti-story">
   <div class="story-inner">
@@ -1754,11 +1688,6 @@
   </div>
 </section>
 
-<div class="section-divider-data" data-section="heritage" data-text="from florence to the world &middot; 93 years of excellence &middot; a global legacy"></div>
-
-<div class="section-divider visible">
-  <p>from florence to the world &middot; 93 years of excellence &middot; a global legacy</p>
-</div>
 
 <section id="heritage" class="heritage">
   <h2>A Legacy of Excellence</h2>
@@ -1785,7 +1714,6 @@
   </div>
 </section>
 
-<div class="section-divider-data" data-section="barattolo" data-text="il barattolo &middot; premium retail format &middot; authentic florentine gelato at home"></div>
 
 <section id="barattolo" class="barattolo-intro">
   <div class="barattolo-intro-content">
@@ -1810,11 +1738,6 @@
   </div>
 </section>
 
-<div class="section-divider-data" data-section="mission" data-text="artisan craftsmanship &middot; premium ingredients &middot; unforgettable taste"></div>
-
-<div class="section-divider visible">
-  <p>artisan craftsmanship &middot; premium ingredients &middot; unforgettable taste</p>
-</div>
 
 <section id="mission" class="mission-vision">
   <nav class="mv-tabs" aria-label="Mission and Vision tabs">
@@ -1833,11 +1756,6 @@
   </div>
 </section>
 
-<div class="section-divider-data" data-section="gallery" data-text="artisan texture &middot; handcrafted swirls &middot; visual delight in every spoonful"></div>
-
-<div class="section-divider visible">
-  <p>artisan texture &middot; handcrafted swirls &middot; visual delight in every spoonful</p>
-</div>
 
 <div class="specs-overlay" id="specsOverlay" onclick="closeSpecsOnBackground(event)">
   <div class="specs-overlay-bg"></div>
@@ -1863,11 +1781,6 @@
 </div>
 </section>
 
-<div class="section-divider-data" data-section="locations" data-text="london &middot; barcelona &middot; paris &middot; tokyo &middot; florence &middot; everywhere in style"></div>
-
-<div class="section-divider visible">
-  <p>london &middot; barcelona &middot; paris &middot; tokyo &middot; florence &middot; everywhere in style</p>
-</div>
 
 <section id="locations" class="global-presence">
   <div class="global-presence-bg" aria-hidden="true">
@@ -1884,11 +1797,6 @@
   <div class="global-presence-scroll-hint" aria-hidden="true">← Scorri per vedere tutto →</div>
 </section>
 
-<div class="section-divider-data" data-section="why" data-text="heritage &middot; quality &middot; global reach &middot; retail excellence &middot; choose badiani"></div>
-
-<div class="section-divider visible">
-  <p>heritage &middot; quality &middot; global reach &middot; retail excellence &middot; choose badiani</p>
-</div>
 
 <section id="why" class="why">
   <h2>Why Choose <span>Badiani</span></h2>
@@ -1914,7 +1822,6 @@
 
 
 
-<div class="section-divider-data" data-section="contact" data-text="partner with us &middot; bring florence to your customers &middot; let's grow together"></div>
 
 <section id="contact" class="contact">
   <h2>Partner With Badiani</h2>
@@ -2022,20 +1929,14 @@ document.body.appendChild(menuOverlay);
 menuToggle.addEventListener('click', () => {
   menuToggle.classList.toggle('active');
   navMenu.classList.toggle('active');
-  const scrollBanner = document.getElementById('scrollBanner');
-  const pinkBanner = document.querySelector('.pink-banner');
   if(navMenu.classList.contains('active')){
     menuOverlay.style.opacity = '1';
     menuOverlay.style.visibility = 'visible';
     document.body.style.overflow = 'hidden';
-    if(scrollBanner) scrollBanner.style.zIndex = '-1';
-    if(pinkBanner) pinkBanner.style.zIndex = '-1';
   } else {
     menuOverlay.style.opacity = '0';
     menuOverlay.style.visibility = 'hidden';
     document.body.style.overflow = '';
-    if(scrollBanner) scrollBanner.style.zIndex = '';
-    if(pinkBanner) pinkBanner.style.zIndex = '';
   }
 });
 
@@ -2094,118 +1995,6 @@ if (requestDistributionBtn && requestDistributionBtn instanceof HTMLAnchorElemen
 
 document.addEventListener('DOMContentLoaded', () => {
   document.documentElement.classList.add('js');
-    const scrollBanner = document.getElementById('scrollBanner');
-    const bannerCurrent = document.getElementById('bannerCurrent');
-
-  function buildSequenceElement(text) {
-    const parts = String(text)
-      .split('·')
-      .map(s => s.trim())
-      .filter(Boolean);
-
-    const seq = document.createElement('div');
-    seq.className = 'banner-ticker__sequence';
-
-    parts.forEach((part, idx) => {
-      const item = document.createElement('span');
-      item.className = 'banner-item';
-      item.textContent = part;
-      seq.appendChild(item);
-
-      // add separator after each item (including the last) to keep the loop seamless
-      const sep = document.createElement('span');
-      sep.className = 'banner-sep';
-      sep.textContent = '·';
-      seq.appendChild(sep);
-    });
-
-    return seq;
-  }
-
-  function setTickerText(text) {
-    if (!bannerCurrent) return;
-    const nextText = String(text ?? '').trim();
-    if (!nextText) return;
-
-    if (bannerCurrent.dataset.tickerText === nextText) return;
-    bannerCurrent.dataset.tickerText = nextText;
-
-    bannerCurrent.setAttribute('aria-label', nextText);
-    bannerCurrent.textContent = '';
-
-    const viewport = document.createElement('div');
-    viewport.className = 'banner-ticker__viewport';
-    const track = document.createElement('div');
-    track.className = 'banner-ticker__track';
-    viewport.appendChild(track);
-    bannerCurrent.appendChild(viewport);
-
-    const seq = buildSequenceElement(nextText);
-    track.appendChild(seq);
-
-    // Duplicate enough times to avoid visible gaps.
-    // We animate by -50%, so we want the track to contain two identical halves.
-    // We'll build a second identical half, then extend further if needed.
-    const seq2 = seq.cloneNode(true);
-    seq2.setAttribute('aria-hidden', 'true');
-    track.appendChild(seq2);
-
-    // Ensure track is wide enough (especially on large screens / short text)
-    requestAnimationFrame(() => {
-      const minWidth = viewport.clientWidth * 2;
-      while (track.scrollWidth < minWidth) {
-        const extra = seq.cloneNode(true);
-        extra.setAttribute('aria-hidden', 'true');
-        track.appendChild(extra);
-      }
-
-      // Force the "two halves" behavior for the -50% animation by setting a fixed width
-      // equal to half the content (first two sequences) times 2.
-      // If we appended extras, the animation still looks continuous.
-    });
-  }
-
-    const sections = Array.from(document.querySelectorAll('[data-section]'));
-    const sectionData = sections.map(sec => ({ 
-        element: document.getElementById(sec.dataset.section), 
-        text: sec.dataset.text 
-    }));
-
-    let ticking = false;
-
-    function updateBanner() {
-        const headerWrapper = document.querySelector('.header-wrapper');
-        if (!headerWrapper) return;
-        const triggerPoint = headerWrapper.getBoundingClientRect().bottom;
-
-        let currentIdx = -1;
-
-        for (let i = sectionData.length - 1; i >= 0; i--) {
-            const el = sectionData[i].element;
-            if (el) {
-                const sectionTop = el.getBoundingClientRect().top;
-                if (sectionTop <= triggerPoint) {
-                    currentIdx = i;
-                    break;
-                }
-            }
-        }
-
-        const next = (currentIdx >= 0 && sectionData[currentIdx]) ? sectionData[currentIdx].text : sectionData[0].text;
-        setTickerText(next);
-
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            window.requestAnimationFrame(updateBanner);
-            ticking = true;
-        }
-    });
-
-    window.addEventListener('resize', updateBanner);
-
     // Mobile: story timeline "compact" (clamped text) + tap-to-expand.
     // Keeps the cards short (less vertical space) and still readable on demand.
     (function setupStoryTimelineExpand(){
@@ -2570,7 +2359,6 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('touchstart', tryPlay, { once: true, passive: true });
     })();
 
-    updateBanner(); 
 });
 </script>
 
