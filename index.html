@@ -335,7 +335,16 @@
     .stat-num{ font-size:54px; font-weight:700; margin-bottom:12px; }
     .stat-label{ font-size:16px; text-transform:uppercase; letter-spacing:2px; opacity:0.95; font-weight:500; }
 
-    .global-presence{ width:100%; padding:0; line-height:1; background:#1f4495 url('worldwide.webp?v=20251222') center/contain no-repeat; position:relative; aspect-ratio: 8 / 3; overflow:hidden; }
+    .global-presence{
+      width:100%;
+      padding:0;
+      line-height:1;
+      background:#1f4495 url('worldwide.webp?v=20251222') center/cover no-repeat;
+      position:relative;
+      height:clamp(240px, 35vh, 520px);
+      aspect-ratio:auto;
+      overflow:hidden;
+    }
     /* Darken only the top area of the image for title readability */
     .global-presence::before{
       content:"";
@@ -687,7 +696,7 @@
     /* Give the background video more vertical room on desktop so it's less cropped */
     @media (min-width: 901px){
       /* Prevent the section (and thus the video) from becoming huge in fullscreen on large monitors */
-      .why{ min-height: clamp(520px, 70vh, 720px); }
+      .why{ min-height: clamp(520px, 70vh, 720px); padding-bottom:clamp(70px, 10vh, 140px); }
     }
     /* Video background layer (replaces the previous image overlay) */
     .why .why-video-bg{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
@@ -713,9 +722,9 @@
     .why h2{ font-size:50px; letter-spacing:1px; text-transform:uppercase; margin-bottom:35px; color:#fff; font-weight:700; text-shadow:2px 2px 8px rgba(0,0,0,0.3); }
     .why h2 span{ color:var(--badiani-pink); font-style:normal; }
     .benefits{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:25px; max-width:1150px; margin:0 auto; }
-    /* Move the "tabs" (benefit cards grid) down on desktop */
+    /* Desktop: keep benefits inside the section so they don't get clipped/overlap the next block */
     @media (min-width: 901px){
-      .why .benefits{ transform: translateY(30%); }
+      .why .benefits{ margin-top:clamp(20px, 4vh, 40px); transform:none; }
     }
     .benefit{ background:rgba(255,255,255,0.15); padding:30px 25px; border-radius:18px; border:2px solid rgba(255,255,255,0.2); transition:all 0.3s; -webkit-backdrop-filter:blur(5px); backdrop-filter:blur(5px); }
     .benefit:hover{ border-color:var(--badiani-pink); background:rgba(255,255,255,0.22); transform:translateY(-5px); box-shadow:0 10px 30px rgba(0,0,0,0.3); }
