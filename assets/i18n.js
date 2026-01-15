@@ -225,7 +225,7 @@
       'banner.contact': 'collabora con noi · porta firenze ai tuoi clienti · cresciamo insieme',
 
       'story.title': 'Buontalenti: la crema che ha fatto storia',
-      'story.titleHtml': '<span class="story-title-main">Buontalenti: la crema</span> <span class="story-title-sub">che ha fatto la storia</span>',
+      'story.titleHtml': '<span class="story-title-main">Buontalenti:</span><br><span class="story-title-sub">la crema che ha fatto la storia</span>',
       'story.lead': 'Negli anni ’60, a Firenze, Badiani dedicò un gusto speciale a Bernardo Buontalenti, l’architetto rinascimentale a cui la tradizione attribuisce la nascita del gelato nel XVI secolo.',
       'story.leadHtml': 'Negli anni ’60, a Firenze, Badiani dedicò un gusto speciale a <span class="highlight-pink">Bernardo Buontalenti</span>, l’architetto rinascimentale a cui la tradizione attribuisce la nascita del <span class="highlight-pink">gelato</span> nel XVI secolo.',
       'story.tl.origin': 'L’origine',
@@ -387,7 +387,7 @@
       'banner.contact': 'colabora con nosotros · lleva florencia a tus clientes · crezcamos juntos',
 
       'story.title': 'Buontalenti: la crema que hizo historia',
-      'story.titleHtml': '<span class="story-title-main">Buontalenti: la crema</span> <span class="story-title-sub">que hizo historia</span>',
+      'story.titleHtml': '<span class="story-title-main">Buontalenti:</span><br><span class="story-title-sub">la crema que hizo historia</span>',
       'story.lead': 'En los años 60, en Florencia, Badiani dedicó un sabor especial a Bernardo Buontalenti, el arquitecto renacentista a quien la tradición atribuye el nacimiento del helado en el siglo XVI.',
       'story.leadHtml': 'En los años 60, en Florencia, Badiani dedicó un sabor especial a <span class="highlight-pink">Bernardo Buontalenti</span>, el arquitecto renacentista a quien la tradición atribuye el nacimiento del <span class="highlight-pink">helado</span> en el siglo XVI.',
       'story.tl.origin': 'El origen',
@@ -549,7 +549,7 @@
       'banner.contact': 'devenez partenaire · apportez florence à vos clients · grandissons ensemble',
 
       'story.title': 'Buontalenti : la crème qui a marqué l’histoire',
-      'story.titleHtml': '<span class="story-title-main">Buontalenti : la crème</span> <span class="story-title-sub">qui a marqué l’histoire</span>',
+      'story.titleHtml': '<span class="story-title-main">Buontalenti :</span><br><span class="story-title-sub">la crème qui a marqué l’histoire</span>',
       'story.lead': 'Dans les années 1960, à Florence, Badiani a dédié un parfum spécial à Bernardo Buontalenti, l’architecte de la Renaissance auquel la tradition attribue la naissance du gelato au XVIe siècle.',
       'story.leadHtml': 'Dans les années 1960, à Florence, Badiani a dédié un parfum spécial à <span class="highlight-pink">Bernardo Buontalenti</span>, l’architecte de la Renaissance auquel la tradition attribue la naissance du <span class="highlight-pink">gelato</span> au XVIe siècle.',
       'story.tl.origin': 'L’origine',
