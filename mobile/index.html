@@ -1199,6 +1199,11 @@
       .barattolo-image-pila{ max-width:none; width:100%; margin:0; padding:0; display:flex; align-items:flex-start; line-height:0; font-size:0; min-width:0; overflow:hidden; background:transparent !important; height:auto; }
       .barattolo-image-pila::after{ display:none !important; }
       .barattolo-image-pila video{ width:100%; height:auto; min-height:0; max-height:none; object-fit:contain; object-position:center; border-radius:0; box-shadow:none; display:block; margin:0; padding:0; background:#000; } 
+      .barattolo-image-pila video::-webkit-media-controls-start-playback-button,
+      .barattolo-image-pila video::-webkit-media-controls{
+        display:none !important;
+        -webkit-appearance:none;
+      }
       .barattolo-text{ text-align:center; padding:40px 15px; background:#3d4f8f url('assets/barattolo-tab.webp?v=20251222') center/cover no-repeat; border-top: none; } 
       .barattolo-text h2{font-size:6vw;}
       .barattolo-text p{ font-size:3.5vw; line-height:1.6; }
@@ -1576,11 +1581,8 @@
     </a>
 
     <nav class="nav-menu" id="navMenu">
-      <a href="#hero">Home</a>
       <a href="#products">Products</a>
       <a href="#story">Story</a>
-      <a href="#heritage">Heritage</a>
-      <a href="#barattolo">Il Barattolo</a>
       <a href="#contact">Contact</a>
     </nav>
 
@@ -1761,7 +1763,7 @@
 <section id="barattolo" class="barattolo-intro">
   <div class="barattolo-intro-content">
     <div class="barattolo-image-pila">
-      <video autoplay muted loop playsinline webkit-playsinline preload="auto" poster="assets/barattolo-showcase.jpg">
+      <video id="barattoloVideo" autoplay muted loop playsinline webkit-playsinline preload="auto">
         <source src="1120.mp4" type="video/mp4">
       </video>
     </div>
@@ -2508,6 +2510,37 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       cards.forEach((card) => observer.observe(card));
+    })();
+
+    (function setupBarattoloAutoplay(){
+      const video = document.getElementById('barattoloVideo');
+      if (!video) return;
+
+      video.muted = true;
+      video.defaultMuted = true;
+      video.volume = 0;
+      video.setAttribute('muted', '');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+
+      const tryPlay = () => {
+        const p = video.play();
+        if (p && typeof p.catch === 'function') {
+          p.catch(() => {});
+        }
+      };
+
+      if (video.readyState >= 2) {
+        tryPlay();
+      } else {
+        video.addEventListener('canplay', tryPlay, { once: true });
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) tryPlay();
+      });
+
+      window.addEventListener('touchstart', tryPlay, { once: true, passive: true });
     })();
 
     updateBanner(); 
