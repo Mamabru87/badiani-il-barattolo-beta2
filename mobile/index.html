@@ -1398,7 +1398,13 @@
         flex-shrink:0;
       }
       .story-title-main{ display:inline; }
-      .story-title-sub{ display:inline; width:auto; font-size:clamp(14px, 4.5vw, 20px); }
+      .story-title-sub{
+        display:block;
+        flex-basis:100%;
+        width:100%;
+        font-size:inherit;
+        line-height:1.05;
+      }
       .story-timeline{
         display:flex;
         gap:10px;
