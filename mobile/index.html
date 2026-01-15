@@ -1283,17 +1283,24 @@
       .mission-box p, .vision-box p{ font-size:clamp(16px, 4.2vw, 18px); line-height:1.5; }
       
       /* Products proporzionato - ultra compact */
-      .products{ padding:24px 8px; }
-      .products-grid{ grid-template-columns:1fr; gap:12px; padding:0 4px; }
+      .products{ padding:20px 8px; }
+      .products-grid{ grid-template-columns:1fr; gap:10px; padding:0 4px; }
       .card{ max-width:100%; }
       .card-img{ aspect-ratio: auto; }
-      .card-header{ padding:10px 12px 4px; }
-      .card-body{ padding:4px 12px 12px; }
-      .card-name{ font-size:clamp(19.8px, 5.5vw, 24.2px); margin-bottom:2px; }
-      .card-description{ font-size:clamp(13px, 3.5vw, 16px); line-height:1.6; margin-bottom:10px; }
-      .card-sub{ font-size:clamp(13px, 3.6vw, 15px); }
+      .card-header{ padding:8px 10px 2px; }
+      .card-body{ padding:4px 10px 10px; }
+      .card-name{ font-size:clamp(18px, 5vw, 22px); margin-bottom:2px; }
+      .card-description{ font-size:clamp(12px, 3.4vw, 15px); line-height:1.5; margin-bottom:8px; }
+      .card-sub{ font-size:clamp(12px, 3.4vw, 14px); }
       .card-features{ gap:4px; }
-      .card-features li{ font-size:clamp(14px, 3.8vw, 16px); padding:8px 10px; }
+      .card-features li{ font-size:clamp(12px, 3.3vw, 15px); padding:7px 9px; }
+
+      /* Mobile: never scale cards to avoid overlap */
+      #products .card,
+      #products .card.is-inview{
+        transform:none !important;
+        box-shadow:0 15px 50px rgba(0,0,0,0.15);
+      }
       
       /* Why section - swipeable compact benefits */
       .why{ padding:24px 10px; }
