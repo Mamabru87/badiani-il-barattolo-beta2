@@ -596,6 +596,8 @@
       max-width:100%;
       object-fit:contain;
       object-position:center -20px;
+      -webkit-clip-path: inset(5px 0 0 0);
+      clip-path: inset(5px 0 0 0);
       border:0;
       border-radius:0;
       box-shadow:none;
@@ -1210,7 +1212,7 @@
       .barattolo-intro-content{ grid-template-columns:1fr; gap:0; padding:0; margin:0; background:transparent; } 
       .barattolo-image-pila{ max-width:none; width:100%; margin:0; padding:0; display:flex; align-items:flex-start; line-height:0; font-size:0; min-width:0; overflow:hidden; background:transparent !important; height:auto; }
       .barattolo-image-pila::after{ display:none !important; }
-      .barattolo-image-pila video{ width:100%; height:auto; min-height:0; max-height:none; object-fit:contain; object-position:center; border-radius:0; box-shadow:none; display:block; margin:0; padding:0; background:#000; } 
+      .barattolo-image-pila video{ width:100%; height:auto; min-height:0; max-height:none; object-fit:contain; object-position:center; -webkit-clip-path: inset(5px 0 0 0); clip-path: inset(5px 0 0 0); border-radius:0; box-shadow:none; display:block; margin:0; padding:0; background:#000; } 
       .barattolo-image-pila video::-webkit-media-controls-start-playback-button,
       .barattolo-image-pila video::-webkit-media-controls{
         display:none !important;
