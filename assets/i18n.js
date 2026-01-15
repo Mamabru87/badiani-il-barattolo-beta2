@@ -832,7 +832,16 @@
 
       /* Mobile slide-in menu: keep dropdown inside viewport */
       @media (max-width: 900px){
-        .lang-switcher__menu{ right: auto; left: 0; }
+        .lang-switcher{ width:100%; }
+        .lang-switcher__btn{ width:100%; justify-content:flex-start; }
+        .lang-switcher__menu{
+          position: static;
+          width:100%;
+          min-width:0;
+          margin-top:8px;
+          box-shadow:none;
+          border-radius:12px;
+        }
       }
     `;
 
@@ -906,26 +915,12 @@
       const navIsOpen = navMenu && navMenu.classList.contains('active');
 
       if (isMobile && navIsOpen && navMenu) {
-        // Keep the dropdown inside the mobile menu so it scrolls naturally with it.
-        menu.style.position = 'absolute';
-        menu.style.left = '0';
+        // Mobile: render as a simple static panel inside the menu.
+        menu.style.position = 'static';
+        menu.style.left = 'auto';
         menu.style.right = 'auto';
-
-        // Position below the button, but flip above if it would overflow the menu.
-        const btnOffsetTop = wrap.offsetTop;
-        const belowTop = btnOffsetTop + wrap.offsetHeight + 10;
-        const menuHeight = menu.offsetHeight || 160;
-        const visibleBottom = navMenu.scrollTop + navMenu.clientHeight;
-        const fitsBelow = belowTop + menuHeight <= visibleBottom;
-        const aboveTop = btnOffsetTop - menuHeight - 10;
-
-        if (fitsBelow || aboveTop < navMenu.scrollTop) {
-          menu.style.top = `${belowTop}px`;
-          menu.style.bottom = 'auto';
-        } else {
-          menu.style.top = `${aboveTop}px`;
-          menu.style.bottom = 'auto';
-        }
+        menu.style.top = 'auto';
+        menu.style.bottom = 'auto';
         return;
       }
 
