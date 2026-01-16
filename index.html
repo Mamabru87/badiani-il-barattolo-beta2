@@ -45,16 +45,21 @@
 
         // Function to set appropriate viewport based on orientation
         function setViewport() {
-          var isPortrait = window.innerHeight > window.innerWidth;
-          if (isPortrait) {
-            // In portrait, use a smaller width that fits better but still shows desktop layout
-            // Scale down the 1366 layout to fit the screen width
-            var scale = window.innerWidth / 1366;
-            meta.setAttribute('content', 'width=1366, initial-scale=' + scale + ', viewport-fit=cover');
-          } else {
-            // In landscape, use full desktop width
-            meta.setAttribute('content', 'width=1366, initial-scale=1, viewport-fit=cover');
-          }
+          // Use screen dimensions (physical) not window dimensions (viewport)
+          var screenW = screen.width;
+          var screenH = screen.height;
+          var isPortrait = window.matchMedia("(orientation: portrait)").matches;
+          
+          // In portrait, screen.width is the shorter dimension
+          // In landscape, screen.width is the longer dimension (on some devices it swaps)
+          var physicalWidth = isPortrait ? Math.min(screenW, screenH) : Math.max(screenW, screenH);
+          
+          // Calculate scale to fit 1366px layout into the physical screen width
+          var scale = physicalWidth / 1366;
+          // Ensure scale doesn't exceed 1 (don't zoom in)
+          scale = Math.min(scale, 1);
+          
+          meta.setAttribute('content', 'width=1366, initial-scale=' + scale + ', maximum-scale=' + scale + ', user-scalable=no, viewport-fit=cover');
         }
         
         // Set initial viewport
@@ -63,10 +68,7 @@
         
         // Update on orientation change
         window.addEventListener('orientationchange', function() {
-          setTimeout(setViewport, 100);
-        });
-        window.addEventListener('resize', function() {
-          setViewport();
+          setTimeout(setViewport, 150);
         });
       } catch (e) {
         // no-op
