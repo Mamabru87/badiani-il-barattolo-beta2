@@ -1008,7 +1008,8 @@
     document.addEventListener('click', (e) => {
       if (!menu.classList.contains('is-open')) return;
       const tEl = e && e.target;
-      if (tEl && wrap.contains(tEl)) return;
+      // Check if click is inside the button wrapper or the menu itself
+      if (tEl && (wrap.contains(tEl) || menu.contains(tEl))) return;
       closeMenu();
     });
 
@@ -1026,7 +1027,8 @@
     });
 
     wrap.appendChild(btn);
-    wrap.appendChild(menu);
+    // Append menu to body to avoid clipping issues with sticky header in Chrome/Safari
+    document.body.appendChild(menu);
     nav.appendChild(wrap);
 
     // Update labels when language changes.
