@@ -513,6 +513,9 @@
        background-position:center center; 
        background-repeat:no-repeat;
        position:relative; 
+       cursor:pointer;
+       touch-action:manipulation;
+       -webkit-tap-highlight-color:transparent; 
        cursor:pointer; 
        transition:all 0.3s ease; 
      }
@@ -540,6 +543,62 @@
     .card-img img:hover {
       transform: scale(1.12);
       filter: brightness(1.08);
+    }
+
+    /* TABLET/TOUCH OPTIMIZATION: Show button always, no hover needed for single tap */
+    @media (hover: none) and (pointer: coarse) {
+      .card-img .card-btn {
+        transform: translateX(-50%) translateY(0) !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+      .card-img img {
+        transform: scale(1.0) !important;
+      }
+      .card-img img:hover,
+      .card-img img:active {
+        transform: scale(1.0) !important;
+      }
+      .card:hover {
+        transform: translateY(-8px) !important;
+      }
+    }
+
+    /* Force desktop on tablet: same rules applied via class */
+    .force-desktop-on-tablet .card-img .card-btn {
+      transform: translateX(-50%) translateY(0) !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+    .force-desktop-on-tablet .card-img img {
+      transform: scale(1.0) !important;
+    }
+    .force-desktop-on-tablet .card-img img:hover,
+    .force-desktop-on-tablet .card-img img:active {
+      transform: scale(1.0) !important;
+    }
+    .force-desktop-on-tablet .card:hover,
+    .force-desktop-on-tablet .card.classico:hover,
+    .force-desktop-on-tablet .card.dolcevita:hover,
+    .force-desktop-on-tablet .card.pistacchio:hover {
+      transform: translateY(-8px) !important;
+    }
+
+    /* TABLET HEADER: Increase all elements by 25% */
+    .force-desktop-on-tablet header {
+      padding: 22px clamp(20px, 4vw, 50px);
+      gap: clamp(12px, 2vw, 30px);
+    }
+    .force-desktop-on-tablet .logo-img {
+      height: clamp(52px, 5vw, 69px);
+    }
+    .force-desktop-on-tablet .nav-menu {
+      gap: clamp(10px, 1.5vw, 25px);
+    }
+    .force-desktop-on-tablet .nav-menu a {
+      font-size: clamp(15px, 1.1vw, 18px);
+      letter-spacing: clamp(0.6px, 0.12vw, 1.25px);
+      padding: clamp(8px, 0.75vw, 10px) clamp(10px, 1.25vw, 18px);
     }
 
     /* Prevent the three jar product cards from scaling on card hover */
@@ -1340,6 +1399,23 @@ function openSpecs(productId, title) {
   if (overlay) overlay.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
+
+// Tablet/touch optimization: ensure single tap opens modal
+(function() {
+  var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  if (!isTouchDevice) return;
+  
+  document.querySelectorAll('.card-img').forEach(function(cardImg) {
+    cardImg.addEventListener('touchend', function(e) {
+      // Prevent default behavior and double-tap zoom
+      e.preventDefault();
+      // Trigger the onclick handler
+      if (cardImg.onclick) {
+        cardImg.onclick(e);
+      }
+    }, { passive: false });
+  });
+})();
 
 function closeSpecs(event) {
   if(event) event.stopPropagation();
