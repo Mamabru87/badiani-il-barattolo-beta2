@@ -845,10 +845,7 @@
           border-radius:18px;
           letter-spacing:0.7px;
         }
-        .lang-switcher__btn:hover,
-        .lang-switcher__btn:active{
-          transform:none;
-        }
+        .lang-switcher__btn{ transition: background 0.3s ease; }
         .lang-switcher__menu{
           position:absolute;
           right:0;
@@ -857,6 +854,27 @@
           min-width:120px;
           box-shadow:0 18px 50px rgba(0,0,0,0.35);
           border-radius:12px;
+        }
+      }
+
+      /* Mobile touch: prevent hover/active transform that clips the top edge */
+      @media (hover: none) and (pointer: coarse){
+        .lang-switcher__btn,
+        .lang-switcher__btn:hover,
+        .lang-switcher__btn:active,
+        .lang-switcher__btn:focus,
+        .lang-switcher__btn[aria-expanded="true"]{
+          transform:none !important;
+        }
+      }
+
+      /* Fallback for mobile devices: prevent transform on small screens */
+      @media (max-width: 900px){
+        .lang-switcher__btn:hover,
+        .lang-switcher__btn:active,
+        .lang-switcher__btn:focus,
+        .lang-switcher__btn[aria-expanded="true"]{
+          transform:none !important;
         }
       }
     `;
