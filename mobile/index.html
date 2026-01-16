@@ -633,7 +633,7 @@
     }
      /* UPDATED: Tab quadrati 380px - FORZATO con padding */
      .products-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(380px,1fr)); gap:50px; max-width:1350px; margin:0 auto; }
-    .card{ background:#fff; border-radius:25px; overflow:hidden; box-shadow:0 15px 50px rgba(0,0,0,0.15); transition:all 0.4s; }
+    .card{ background:#fff; border-radius:25px; overflow:hidden; box-shadow:0 15px 50px rgba(0,0,0,0.15); transition:all 0.4s; position:relative; }
 
     /* Mobile: subtle auto-zoom while the user scrolls over the product cards */
     @media (hover:none) and (pointer:coarse){
@@ -670,22 +670,6 @@
     }
     /* overlay button: use a real element instead of pseudo-element so it's clickable */
     .card-img::after{ display:none; }
-    /* Mobile: Info icon to indicate specs are available on tap */
-    .card-img::before{
-      content: "ⓘ";
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      color: rgba(88,89,91,0.6);
-      font-size: 22px;
-      z-index: 10;
-      pointer-events: none;
-      text-shadow: 0 1px 2px rgba(255,255,255,0.8);
-    }
-    /* Hide on desktop where hover works */
-    @media (hover:hover) and (pointer:fine){
-      .card-img::before{ display: none; }
-    }
     .card-img .card-btn{ position:absolute; bottom:18px; left:50%; transform:translateX(-50%) translateY(50px); background:rgba(30,57,141,0.95); color:#fff; padding:12px 28px; border-radius:25px; font-size:15px; letter-spacing:1.2px; text-transform:uppercase; opacity:0; transition:all 0.35s ease; pointer-events:none; font-weight:600; box-shadow:0 6px 22px rgba(30,57,141,0.35); text-decoration:none; display:inline-block; }
     .card-img:hover .card-btn{ transform:translateX(-50%) translateY(0); opacity:1; }
     @media (hover: none) and (pointer: coarse) {
@@ -723,7 +707,22 @@
       box-shadow:0 25px 70px rgba(0,0,0,0.25);
     }
     .card-award{ position:absolute; top:22px; right:22px; background:var(--badiani-yellow); color:#fff; padding:10px 20px; border-radius:25px; font-size:14px; font-weight:600; letter-spacing:1px; text-transform:uppercase; box-shadow:0 4px 15px rgba(216,162,0,0.4); z-index:2; }
-    .card-header{ padding:30px 35px; text-align:center; color:#fff; }
+    .card-header{ padding:30px 35px; text-align:center; color:#fff; position:relative; }
+    /* Mobile: Info icon on card-header to indicate specs are available on tap */
+    .card-header::before{
+      content: "ⓘ";
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      color: rgba(255,255,255,0.5);
+      font-size: 18px;
+      z-index: 10;
+      pointer-events: none;
+    }
+    /* Hide on desktop where hover works */
+    @media (hover:hover) and (pointer:fine){
+      .card-header::before{ display: none; }
+    }
     .card.classico .card-header{ background:linear-gradient(135deg, var(--badiani-blue), #2a4ab0); }
     .card.dolcevita .card-header{ background:linear-gradient(135deg, #3d2314, #5a3320); }
     .card.pistacchio .card-header{ background:linear-gradient(135deg, var(--badiani-green), #7f8c5a); }
