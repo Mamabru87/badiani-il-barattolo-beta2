@@ -304,31 +304,8 @@
 
     .story-inner{ max-width:1200px; margin:0 auto; position:relative; z-index:1; }
     .story-header{ text-align:center; margin-bottom:50px; }
-    .story-title{ 
-      position:relative; 
-      display:inline-flex; 
-      align-items: center; 
-      justify-content: center; 
-      gap: 10px; 
-      padding-left:0; 
-      font-size:54px; 
-      letter-spacing:1px; 
-      text-transform:uppercase; 
-      color:var(--badiani-blue); 
-      margin-bottom:25px; 
-      font-weight:700;
-      line-height: 1;
-    }
-    .story-title::before{ 
-      content:''; 
-      position:static; 
-      transform:translateY(-2px);
-      width:40px; 
-      height:40px; 
-      background:var(--badiani-pink); 
-      border-radius:3px; 
-      flex-shrink: 0;
-    }
+    .story-title{ position:relative; display:inline-block; padding-left:50px; font-size:54px; letter-spacing:1px; text-transform:uppercase; color:var(--badiani-blue); margin-bottom:25px; font-weight:700; }
+    .story-title::before{ content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:40px; height:40px; background:var(--badiani-pink); border-radius:3px; }
     .story-lead{ font-size:22px; margin-bottom:40px; line-height:1.9; max-width:900px; margin-left:auto; margin-right:auto; font-weight:300; }
     .highlight-pink{ background:var(--badiani-pink); color:#fff; padding:3px 10px; font-family:'SuperGroteskC', 'SuperGroteskA', 'SuperGroteskB', sans-serif; font-weight:500; border-radius:3px; white-space:nowrap; text-transform:uppercase; font-variant-caps:normal; }
 
@@ -370,31 +347,8 @@
 
     .heritage{ padding:70px 20px; text-align:center; }
     .heritage > *{ position:relative; z-index:1; }
-    .heritage h2{ 
-      position:relative; 
-      display:inline-flex; 
-      align-items: center; 
-      justify-content: center; 
-      gap: 10px;
-      padding-left:0; 
-      font-size:54px; 
-      letter-spacing:1px; 
-      text-transform:uppercase; 
-      color:var(--badiani-blue); 
-      margin-bottom:25px; 
-      font-weight:700;
-      line-height: 1;
-    }
-    .heritage h2::before{ 
-      content:''; 
-      position:static; 
-      transform:translateY(-2px);
-      width:40px; 
-      height:40px; 
-      background:var(--badiani-blue); 
-      border-radius:3px; 
-      flex-shrink: 0; 
-    }
+    .heritage h2{ position:relative; display:inline-block; padding-left:50px; font-size:54px; letter-spacing:1px; text-transform:uppercase; color:var(--badiani-blue); margin-bottom:25px; font-weight:700; }
+    .heritage h2::before{ content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:40px; height:40px; background:var(--badiani-blue); border-radius:3px; }
     .heritage-intro{ max-width:950px; margin:0 auto 45px; font-size:20px; line-height:1.9; font-weight:300; }
     .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:25px; max-width:1150px; margin:0 auto; }
     .stat{ background:var(--badiani-blue); color:#fff; padding:50px 25px; border-radius:20px; transition:transform 0.3s; }
@@ -549,39 +503,26 @@
 
     .products{ padding:90px 20px; }
     .products > *{ position:relative; z-index:1; }
-    .section-title{ 
-      position:relative; 
-      display:inline-flex; 
-      align-items: center; 
-      justify-content: center; 
-      gap: 10px; /* Distanza standard desktop */
-      padding-left:0; 
-      font-size:54px; 
-      letter-spacing:1px; 
-      text-transform:uppercase; 
-      color:var(--badiani-blue); 
-      margin-bottom:25px; 
-      text-align:center; 
-      font-weight:700; 
-      line-height: 1; /* Reset line-height per allineamento preciso */
-    }
-    .section-title::before{ 
-      content:''; 
-      position:static; 
-      transform:translateY(-2px); /* Leggero lift desktop */
-      width:40px; 
-      height:40px; 
-      background:var(--badiani-cyan); 
-      border-radius:3px; 
-      flex-shrink: 0;
-    }
+    .section-title{ position:relative; display:inline-block; padding-left:50px; font-size:54px; letter-spacing:1px; text-transform:uppercase; color:var(--badiani-blue); margin-bottom:25px; text-align:center; font-weight:700; }
+    .section-title::before{ content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:40px; height:40px; background:var(--badiani-cyan); border-radius:3px; }
     .section-title span{ color:var(--badiani-pink); font-style:normal; }
     .section-subtitle{ text-align:center; font-size:20px; color:var(--badiani-gray); margin-bottom:65px; font-style:normal; font-family:'SuperGroteskDigits', 'SuperGroteskC', 'SuperGroteskA', 'SuperGroteskB', sans-serif; font-weight:500; }
 
     /* Center the Premium Collection title and square as a single block */
     .products .section-title{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:14px;
+      padding-left:0;
       width:fit-content;
       margin:0 auto 25px;
+    }
+    .products .section-title::before{
+      position:static;
+      transform:none;
+      display:inline-block;
+      flex-shrink:0;
     }
      /* UPDATED: Tab quadrati 380px - FORZATO con padding */
      .products-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(380px,1fr)); gap:50px; max-width:1350px; margin:0 auto; }
@@ -947,31 +888,8 @@
 
     .contact{ padding:70px 20px; text-align:center; }
     .contact > *{ position:relative; z-index:1; }
-    .contact h2{ 
-      position:relative; 
-      display:inline-flex; 
-      align-items: center; 
-      justify-content: center; 
-      gap: 10px;
-      padding-left:0; 
-      font-size:54px; 
-      letter-spacing:1px; 
-      text-transform:uppercase; 
-      color:var(--badiani-blue); 
-      margin-bottom:25px; 
-      font-weight:700; 
-      line-height:1; 
-    }
-    .contact h2::before{ 
-      content:''; 
-      position:static; 
-      transform:translateY(-2px);
-      width:40px; 
-      height:40px; 
-      background:var(--badiani-pink); 
-      border-radius:3px; 
-      flex-shrink: 0;
-    }
+    .contact h2{ position:relative; display:inline-block; padding-left:50px; font-size:54px; letter-spacing:1px; text-transform:uppercase; color:var(--badiani-blue); margin-bottom:25px; font-weight:700; }
+    .contact h2::before{ content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:40px; height:40px; background:var(--badiani-pink); border-radius:3px; }
     .contact p{ font-size:19px; margin-bottom:12px; font-weight:300; }
     .contact p.highlight{ color:var(--badiani-pink); font-weight:600; font-size:28px; }
     .cta-btn{ display:inline-block; margin-top:30px; padding:20px 60px; background:var(--badiani-pink); color:#fff; text-decoration:none; border-radius:35px; font-size:16px; font-weight:600; letter-spacing:3px; text-transform:uppercase; transition:all 0.3s; box-shadow:0 8px 25px rgba(240,103,166,0.3); }
@@ -1041,7 +959,7 @@
       .pink-banner p,
       
       /* Titoli sezione */
-      .section-title{ font-size:6vw; padding-left:0; gap:0.4em; letter-spacing:0.5px; }
+      .section-title{ font-size:6vw; padding-left:25px; letter-spacing:0.5px; }
       .section-title::before{ width:20px; height:20px; }
       .section-subtitle{ font-size:3.5vw; padding:0 15px; }
       
