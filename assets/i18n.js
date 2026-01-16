@@ -166,6 +166,8 @@
       'spec.mayContain': 'May Contain',
       'spec.gluten': 'Gluten',
 
+      'hint.tapForSpecs': 'Tap for specs',
+
       'specValue.custardGelato': 'Custard Gelato',
       'specValue.dolcevitaDesc': 'Custard gelato with gianduia spread 20%',
       'specValue.pistacchioDesc': 'Custard gelato with pistachio spread 20%',
@@ -327,6 +329,8 @@
       'spec.allergens': 'Allergeni',
       'spec.mayContain': 'Può contenere',
       'spec.gluten': 'Glutine',
+
+      'hint.tapForSpecs': 'Tocca per le specifiche',
 
       'specValue.custardGelato': 'Gelato alla crema',
       'specValue.dolcevitaDesc': 'Gelato alla crema con variegatura alla gianduia 20%',
@@ -490,6 +494,8 @@
       'spec.mayContain': 'Puede contener',
       'spec.gluten': 'Gluten',
 
+      'hint.tapForSpecs': 'Toca para ver',
+
       'specValue.custardGelato': 'Helado de crema',
       'specValue.dolcevitaDesc': 'Helado de crema con gianduia 20%',
       'specValue.pistacchioDesc': 'Helado de crema con pistacho 20%',
@@ -651,6 +657,8 @@
       'spec.allergens': 'Allergènes',
       'spec.mayContain': 'Peut contenir',
       'spec.gluten': 'Gluten',
+
+      'hint.tapForSpecs': 'Appuyez pour voir',
 
       'specValue.custardGelato': 'Gelato à la crème',
       'specValue.dolcevitaDesc': 'Gelato à la crème avec gianduia 20%',

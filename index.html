@@ -572,16 +572,47 @@
     }
     .force-desktop-on-tablet .card-img img {
       transform: scale(1.0) !important;
+      transition: transform 0.3s ease !important;
     }
     .force-desktop-on-tablet .card-img img:hover,
     .force-desktop-on-tablet .card-img img:active {
       transform: scale(1.0) !important;
+    }
+    /* Tablet: zoom effect on tap */
+    .force-desktop-on-tablet .card-img.is-tapped img {
+      transform: scale(1.08) !important;
+      filter: brightness(1.05);
     }
     .force-desktop-on-tablet .card:hover,
     .force-desktop-on-tablet .card.classico:hover,
     .force-desktop-on-tablet .card.dolcevita:hover,
     .force-desktop-on-tablet .card.pistacchio:hover {
       transform: translateY(-8px) !important;
+    }
+
+    /* Specs hint for tablet - small non-invasive text */
+    .specs-hint {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: rgba(30,57,141,0.85);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 15px;
+      font-size: 11px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      white-space: nowrap;
+      font-weight: 500;
+      z-index: 5;
+    }
+    .card-img.is-tapped .specs-hint {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     /* TABLET HEADER: Increase all elements by 25% */
@@ -1199,6 +1230,7 @@
 
     <article class="card classico">
       <div class="card-img" onclick="openSpecs('classico', 'BUONTALENTI CLASSICO')">
+        <span class="specs-hint" data-i18n="hint.tapForSpecs">Tap for specs</span>
         <a class="card-btn" href="#" aria-label="View Buontalenti Classico specs" onclick="openSpecs('classico', 'BUONTALENTI CLASSICO'); event.stopPropagation(); return false;">ðŸ‘ View Specs</a>
         <img src="classico.webp" alt="Buontalenti Classico">
       </div>
@@ -1221,6 +1253,7 @@
 
     <article class="card dolcevita">
       <div class="card-img" onclick="openSpecs('dolcevita', 'BUONTALENTI DOLCEVITA')">
+        <span class="specs-hint" data-i18n="hint.tapForSpecs">Tap for specs</span>
         <a class="card-btn" href="#" aria-label="View Buontalenti Dolcevita specs" onclick="openSpecs('dolcevita', 'BUONTALENTI DOLCEVITA'); event.stopPropagation(); return false;">ðŸ‘ View Specs</a>
         <div class="card-award">Best Flavour 2015</div>
         <img src="dolcevita.webp" alt="Buontalenti Dolcevita">
@@ -1244,6 +1277,7 @@
 
     <article class="card pistacchio">
       <div class="card-img" onclick="openSpecs('pistacchio', 'BUONTALENTI PISTACCHIO')">
+        <span class="specs-hint" data-i18n="hint.tapForSpecs">Tap for specs</span>
         <a class="card-btn" href="#" aria-label="View Buontalenti Pistacchio specs" onclick="openSpecs('pistacchio', 'BUONTALENTI PISTACCHIO'); event.stopPropagation(); return false;">View Specs</a>
         <div class="card-award">World Best-Seller</div>
         <img src="pistacchio.webp" alt="Buontalenti Pistacchio">
@@ -1400,21 +1434,72 @@ function openSpecs(productId, title) {
   document.body.style.overflow = 'hidden';
 }
 
-// Tablet/touch optimization: ensure single tap opens modal
+// Tablet/touch optimization: show zoom effect and hint on first tap, open on second tap
 (function() {
   var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-  if (!isTouchDevice) return;
+  var isTablet = document.documentElement.classList.contains('force-desktop-on-tablet');
+  
+  // Only apply tap-to-preview on tablets, not on all touch devices
+  if (!isTouchDevice && !isTablet) return;
+  
+  var tappedCard = null;
+  var tapTimeout = null;
   
   document.querySelectorAll('.card-img').forEach(function(cardImg) {
+    cardImg.addEventListener('touchstart', function(e) {
+      // Add tapped class for zoom effect
+      cardImg.classList.add('is-tapped');
+      
+      // If this is the same card that was already tapped, open modal
+      if (tappedCard === cardImg) {
+        clearTimeout(tapTimeout);
+        tappedCard = null;
+        // Let the onclick handle opening
+        return;
+      }
+      
+      // Remove tapped state from other cards
+      document.querySelectorAll('.card-img.is-tapped').forEach(function(c) {
+        if (c !== cardImg) c.classList.remove('is-tapped');
+      });
+      
+      // Set this as the tapped card
+      tappedCard = cardImg;
+      
+      // Reset after 3 seconds of no interaction
+      clearTimeout(tapTimeout);
+      tapTimeout = setTimeout(function() {
+        cardImg.classList.remove('is-tapped');
+        tappedCard = null;
+      }, 3000);
+      
+    }, { passive: true });
+    
     cardImg.addEventListener('touchend', function(e) {
-      // Prevent default behavior and double-tap zoom
-      e.preventDefault();
-      // Trigger the onclick handler
-      if (cardImg.onclick) {
-        cardImg.onclick(e);
+      // If card was already tapped (showing hint), open modal
+      if (cardImg.classList.contains('is-tapped')) {
+        e.preventDefault();
+        // Small delay to show the zoom effect
+        setTimeout(function() {
+          if (cardImg.onclick) {
+            cardImg.onclick(e);
+          }
+          cardImg.classList.remove('is-tapped');
+          tappedCard = null;
+        }, 150);
       }
     }, { passive: false });
   });
+  
+  // Remove tapped state when touching elsewhere
+  document.addEventListener('touchstart', function(e) {
+    if (!e.target.closest('.card-img')) {
+      document.querySelectorAll('.card-img.is-tapped').forEach(function(c) {
+        c.classList.remove('is-tapped');
+      });
+      tappedCard = null;
+    }
+  }, { passive: true });
 })();
 
 function closeSpecs(event) {
