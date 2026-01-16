@@ -279,8 +279,8 @@
       'card.pistacchio.f3': 'Senza glutine',
       'card.pistacchio.f4': 'Preferito globale',
 
-      'mission.tab.mission': 'Mission',
-      'mission.tab.vision': 'Vision',
+      'mission.tab.mission': 'Missione',
+      'mission.tab.vision': 'Visione',
       'mission.title': 'La nostra missione',
       'mission.strong': 'Portare gusto nella tua vita',
       'mission.body': 'Portare gioia ai consumatori di tutte le età con il nostro gelato artigianale iconico, seguendo sempre principi di alta qualità e sostenibilità.',
