@@ -43,30 +43,9 @@
         var meta = document.querySelector('meta[name="viewport"]');
         if (!meta) return;
 
-        // Use device-width with a minimum-scale to prevent auto-zoom issues
-        // shrink-to-fit=no prevents Safari from zooming to fit content
-        meta.setAttribute('content', 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, shrink-to-fit=no');
+        // 1366 matches iPad Pro landscape CSS width and keeps the desktop header/nav stable.
+        meta.setAttribute('content', 'width=1366, initial-scale=1, viewport-fit=cover');
         document.documentElement.classList.add('force-desktop-on-tablet');
-        
-        // Handle orientation change - refresh layout
-        window.addEventListener('orientationchange', function() {
-          // Small delay to let the browser complete the rotation
-          setTimeout(function() {
-            window.scrollTo(0, 0);
-            // Force recalculation of layout
-            document.body.style.display = 'none';
-            document.body.offsetHeight; // trigger reflow
-            document.body.style.display = '';
-          }, 100);
-        });
-        
-        // Prevent pinch zoom
-        document.addEventListener('touchmove', function(e) {
-          if (e.touches.length > 1) {
-            e.preventDefault();
-          }
-        }, { passive: false });
-        
       } catch (e) {
         // no-op
       }
@@ -192,27 +171,6 @@
     }
     *{margin:0;padding:0;box-sizing:border-box;}
     html{scroll-behavior:smooth; -webkit-text-size-adjust:100%; text-size-adjust:100%;}
-    
-    /* iPad-specific: prevent auto-zoom and handle orientation */
-    html.force-desktop-on-tablet {
-      width: 100%;
-      min-width: 100%;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-    }
-    html.force-desktop-on-tablet body {
-      width: 100%;
-      min-width: 100%;
-      overflow-x: hidden;
-      transform-origin: top left;
-    }
-    /* Ensure proper scaling in both orientations */
-    @supports (-webkit-touch-callout: none) {
-      html.force-desktop-on-tablet {
-        min-height: 100vh;
-        min-height: -webkit-fill-available;
-      }
-    }
 
     
 
@@ -672,56 +630,6 @@
       font-size: clamp(15px, 1.1vw, 18px);
       letter-spacing: clamp(0.6px, 0.12vw, 1.25px);
       padding: clamp(8px, 0.75vw, 10px) clamp(10px, 1.25vw, 18px);
-    }
-
-    /* TABLET: Responsive layout for both orientations */
-    .force-desktop-on-tablet .hero {
-      height: auto;
-      min-height: 50vh;
-      padding: 60px 20px;
-    }
-    .force-desktop-on-tablet .hero h1 {
-      font-size: clamp(36px, 6vw, 60px);
-    }
-    .force-desktop-on-tablet .hero p {
-      font-size: clamp(16px, 2.5vw, 22px);
-    }
-    .force-desktop-on-tablet section {
-      padding-left: 5vw;
-      padding-right: 5vw;
-    }
-    /* iPad Portrait: Stack cards vertically */
-    @media screen and (max-width: 1024px) and (orientation: portrait) {
-      .force-desktop-on-tablet .products-grid {
-        grid-template-columns: 1fr !important;
-        max-width: 500px;
-        margin: 0 auto;
-      }
-      .force-desktop-on-tablet .card {
-        max-width: 100%;
-      }
-      .force-desktop-on-tablet .benefits-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-      }
-      .force-desktop-on-tablet .specs-overlay-content {
-        flex-direction: column;
-        padding: 15px;
-      }
-      .force-desktop-on-tablet .specs-overlay-image {
-        width: 80%;
-        max-width: 350px;
-      }
-      .force-desktop-on-tablet .specs-panel-fullscreen {
-        width: 90%;
-        max-width: 500px;
-      }
-    }
-    /* iPad Landscape: Keep desktop-like layout */
-    @media screen and (min-width: 1025px), 
-           screen and (orientation: landscape) and (min-width: 768px) {
-      .force-desktop-on-tablet .products-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
     }
 
     /* Prevent the three jar product cards from scaling on card hover */
@@ -1528,34 +1436,55 @@ function openSpecs(productId, title) {
 
 // Tablet/touch optimization: show zoom effect and hint on first tap, open on second tap
 (function() {
-  var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
   var isTablet = document.documentElement.classList.contains('force-desktop-on-tablet');
   
-  // Only apply tap-to-preview on tablets, not on all touch devices
-  if (!isTouchDevice && !isTablet) return;
+  // Only apply tap-to-preview on tablets
+  if (!isTablet) return;
   
   var tappedCard = null;
   var tapTimeout = null;
   
   document.querySelectorAll('.card-img').forEach(function(cardImg) {
+    // Prevent the default onclick from firing immediately
+    var originalOnclick = cardImg.onclick;
+    cardImg.onclick = null;
+    cardImg.removeAttribute('onclick');
+    
+    // Determine which product card this is
+    var card = cardImg.closest('.card');
+    var specId, specTitle;
+    if (card.classList.contains('classico')) {
+      specId = 'classico';
+      specTitle = 'BUONTALENTI CLASSICO';
+    } else if (card.classList.contains('dolcevita')) {
+      specId = 'dolcevita';
+      specTitle = 'DOLCEVITA';
+    } else {
+      specId = 'pistacchio';
+      specTitle = 'PISTACCHIO DI BRONTE';
+    }
+    
     cardImg.addEventListener('touchstart', function(e) {
-      // Add tapped class for zoom effect
-      cardImg.classList.add('is-tapped');
+      e.preventDefault();
       
-      // If this is the same card that was already tapped, open modal
-      if (tappedCard === cardImg) {
+      // If this card is already tapped (showing preview), open the modal on second tap
+      if (tappedCard === cardImg && cardImg.classList.contains('is-tapped')) {
         clearTimeout(tapTimeout);
+        cardImg.classList.remove('is-tapped');
         tappedCard = null;
-        // Let the onclick handle opening
+        // Open the specs modal
+        openSpecs(specId, specTitle);
         return;
       }
       
+      // First tap: show zoom effect and hint
       // Remove tapped state from other cards
       document.querySelectorAll('.card-img.is-tapped').forEach(function(c) {
-        if (c !== cardImg) c.classList.remove('is-tapped');
+        c.classList.remove('is-tapped');
       });
       
-      // Set this as the tapped card
+      // Add tapped class for zoom effect
+      cardImg.classList.add('is-tapped');
       tappedCard = cardImg;
       
       // Reset after 3 seconds of no interaction
@@ -1565,22 +1494,17 @@ function openSpecs(productId, title) {
         tappedCard = null;
       }, 3000);
       
-    }, { passive: true });
-    
-    cardImg.addEventListener('touchend', function(e) {
-      // If card was already tapped (showing hint), open modal
-      if (cardImg.classList.contains('is-tapped')) {
-        e.preventDefault();
-        // Small delay to show the zoom effect
-        setTimeout(function() {
-          if (cardImg.onclick) {
-            cardImg.onclick(e);
-          }
-          cardImg.classList.remove('is-tapped');
-          tappedCard = null;
-        }, 150);
-      }
     }, { passive: false });
+    
+    // Also handle click for non-touch interactions (mouse on tablet with keyboard)
+    cardImg.addEventListener('click', function(e) {
+      // On tablet, clicks are handled by touchstart, so ignore
+      if (isTablet) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+    });
   });
   
   // Remove tapped state when touching elsewhere
