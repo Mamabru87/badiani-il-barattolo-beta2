@@ -1,4 +1,4 @@
-/* Badiani Il Barattolo - lightweight i18n + language switcher
+﻿/* Badiani Il Barattolo - lightweight i18n + language switcher
    Supports: en, it, es, fr
    - Persists selection in localStorage
    - Updates <html lang>
@@ -99,19 +99,19 @@
       'award.bestFlavour2015': 'Best Flavour 2015',
       'award.worldBestSeller': 'World Best-Seller',
 
-      'card.classico.desc': 'Our world-famous flagship flavour made with only four ingredients: cream, milk, sugar, and free-range eggs.',
+      'card.classico.desc': 'Our world-famous flagship flavour.<br>Made with only four ingredients: cream, milk, sugar, and free-range eggs.',
       'card.classico.f1': '4 ingredients only',
       'card.classico.f2': 'Free-range eggs',
       'card.classico.f3': 'Gluten-free',
       'card.classico.f4': '24-month shelf life',
 
-      'card.dolcevita.desc': 'Custard gelato with gianduia hazelnut-cocoa spread (20%). Made with Italian hazelnut paste and Madagascar Bourbon vanilla.',
+      'card.dolcevita.desc': 'Custard gelato with gianduia hazelnut-cocoa spread (20%).<br>Made with Italian hazelnut paste and Madagascar Bourbon vanilla.',
       'card.dolcevita.f1': 'Italian hazelnut 2.6%',
       'card.dolcevita.f2': 'Madagascar vanilla',
       'card.dolcevita.f3': 'Gluten-free',
       'card.dolcevita.f4': 'Award-winning',
 
-      'card.pistacchio.desc': 'Our most popular flavour worldwide. Custard gelato swirled with pistachio spreadable cream (20%) and 5% pure pistachio paste.',
+      'card.pistacchio.desc': 'Our most popular flavour worldwide.<br>Custard gelato swirled with pistachio spreadable cream (20%) and 5% pure pistachio paste.',
       'card.pistacchio.f1': '5% pistachio paste',
       'card.pistacchio.f2': 'Free-range eggs',
       'card.pistacchio.f3': 'Gluten-free',
@@ -261,19 +261,19 @@
       'award.bestFlavour2015': 'Miglior gusto 2015',
       'award.worldBestSeller': 'Best-seller mondiale',
 
-      'card.classico.desc': 'Il nostro gusto di punta, famoso in tutto il mondo, realizzato con soli quattro ingredienti: panna, latte, zucchero e uova da allevamento all’aperto.',
+      'card.classico.desc': 'Il nostro gusto di punta, famoso in tutto il mondo.<br>Realizzato con soli quattro ingredienti: panna, latte, zucchero e uova da allevamento all’aperto.',
       'card.classico.f1': 'Solo 4 ingredienti',
       'card.classico.f2': 'Uova da allevamento all’aperto',
       'card.classico.f3': 'Senza glutine',
       'card.classico.f4': 'Shelf life 24 mesi',
 
-      'card.dolcevita.desc': 'Gelato alla crema con variegatura alla gianduia (20%). Con pasta di nocciola italiana e vaniglia Bourbon del Madagascar.',
+      'card.dolcevita.desc': 'Gelato alla crema con variegatura alla gianduia (20%).<br>Con pasta di nocciola italiana e vaniglia Bourbon del Madagascar.',
       'card.dolcevita.f1': 'Nocciola italiana 2,6%',
       'card.dolcevita.f2': 'Vaniglia del Madagascar',
       'card.dolcevita.f3': 'Senza glutine',
       'card.dolcevita.f4': 'Premiato',
 
-      'card.pistacchio.desc': 'Il nostro gusto più amato nel mondo. Gelato alla crema con variegatura al pistacchio (20%) e pasta di pistacchio puro al 5%.',
+      'card.pistacchio.desc': 'Il nostro gusto più amato nel mondo.<br>Gelato alla crema con variegatura al pistacchio (20%) e pasta di pistacchio puro al 5%.',
       'card.pistacchio.f1': '5% pasta di pistacchio',
       'card.pistacchio.f2': 'Uova da allevamento all’aperto',
       'card.pistacchio.f3': 'Senza glutine',
@@ -423,19 +423,19 @@
       'award.bestFlavour2015': 'Mejor sabor 2015',
       'award.worldBestSeller': 'Súper ventas mundial',
 
-      'card.classico.desc': 'Nuestro sabor insignia, famoso en todo el mundo, elaborado solo con cuatro ingredientes: nata, leche, azúcar y huevos de gallinas camperas.',
+      'card.classico.desc': 'Nuestro sabor insignia, famoso en todo el mundo.<br>Elaborado solo con cuatro ingredientes: nata, leche, azúcar y huevos de gallinas camperas.',
       'card.classico.f1': 'Solo 4 ingredientes',
       'card.classico.f2': 'Huevos camperos',
       'card.classico.f3': 'Sin gluten',
       'card.classico.f4': 'Caducidad 24 meses',
 
-      'card.dolcevita.desc': 'Helado de crema con gianduia de avellana y cacao (20%). Con pasta de avellana italiana y vainilla Bourbon de Madagascar.',
+      'card.dolcevita.desc': 'Helado de crema con gianduia de avellana y cacao (20%).<br>Con pasta de avellana italiana y vainilla Bourbon de Madagascar.',
       'card.dolcevita.f1': 'Avellana italiana 2,6%',
       'card.dolcevita.f2': 'Vainilla de Madagascar',
       'card.dolcevita.f3': 'Sin gluten',
       'card.dolcevita.f4': 'Premiado',
 
-      'card.pistacchio.desc': 'Nuestro sabor más popular en el mundo. Helado de crema con crema untuosa de pistacho (20%) y 5% de pasta de pistacho puro.',
+      'card.pistacchio.desc': 'Nuestro sabor más popular en el mundo.<br>Helado de crema con crema untuosa de pistacho (20%) y 5% de pasta de pistacho puro.',
       'card.pistacchio.f1': '5% pasta de pistacho',
       'card.pistacchio.f2': 'Huevos camperos',
       'card.pistacchio.f3': 'Sin gluten',
@@ -585,19 +585,19 @@
       'award.bestFlavour2015': 'Meilleure saveur 2015',
       'award.worldBestSeller': 'Best-seller mondial',
 
-      'card.classico.desc': 'Notre parfum signature, célèbre dans le monde entier, élaboré avec seulement quatre ingrédients : crème, lait, sucre et œufs plein air.',
+      'card.classico.desc': 'Notre parfum signature, célèbre dans le monde entier.<br>Élaboré avec seulement quatre ingrédients : crème, lait, sucre et œufs plein air.',
       'card.classico.f1': 'Seulement 4 ingrédients',
       'card.classico.f2': 'Œufs plein air',
       'card.classico.f3': 'Sans gluten',
       'card.classico.f4': 'DLU 24 mois',
 
-      'card.dolcevita.desc': 'Gelato à la crème avec gianduia noisette-cacao (20%). Avec pâte de noisette italienne et vanille Bourbon de Madagascar.',
+      'card.dolcevita.desc': 'Gelato à la crème avec gianduia noisette-cacao (20%).<br>Avec pâte de noisette italienne et vanille Bourbon de Madagascar.',
       'card.dolcevita.f1': 'Noisette italienne 2,6%',
       'card.dolcevita.f2': 'Vanille de Madagascar',
       'card.dolcevita.f3': 'Sans gluten',
       'card.dolcevita.f4': 'Primé',
 
-      'card.pistacchio.desc': 'Notre parfum le plus populaire dans le monde. Gelato à la crème marbré de crème de pistache (20%) et de 5% de pâte de pistache pure.',
+      'card.pistacchio.desc': 'Notre parfum le plus populaire dans le monde.<br>Gelato à la crème marbré de crème de pistache (20%) et de 5% de pâte de pistache pure.',
       'card.pistacchio.f1': '5% pâte de pistache',
       'card.pistacchio.f2': 'Œufs plein air',
       'card.pistacchio.f3': 'Sans gluten',
@@ -1244,19 +1244,19 @@
     bindText('.card.pistacchio .card-award', 'award.worldBestSeller');
 
     // Card descriptions + features (desktop+mobile)
-    bindText('.card.classico .card-description', 'card.classico.desc');
+    bindHTML('.card.classico .card-description', 'card.classico.desc');
     bindText('.card.classico .card-features li:nth-child(1)', 'card.classico.f1');
     bindText('.card.classico .card-features li:nth-child(2)', 'card.classico.f2');
     bindText('.card.classico .card-features li:nth-child(3)', 'card.classico.f3');
     bindText('.card.classico .card-features li:nth-child(4)', 'card.classico.f4');
 
-    bindText('.card.dolcevita .card-description', 'card.dolcevita.desc');
+    bindHTML('.card.dolcevita .card-description', 'card.dolcevita.desc');
     bindText('.card.dolcevita .card-features li:nth-child(1)', 'card.dolcevita.f1');
     bindText('.card.dolcevita .card-features li:nth-child(2)', 'card.dolcevita.f2');
     bindText('.card.dolcevita .card-features li:nth-child(3)', 'card.dolcevita.f3');
     bindText('.card.dolcevita .card-features li:nth-child(4)', 'card.dolcevita.f4');
 
-    bindText('.card.pistacchio .card-description', 'card.pistacchio.desc');
+    bindHTML('.card.pistacchio .card-description', 'card.pistacchio.desc');
     bindText('.card.pistacchio .card-features li:nth-child(1)', 'card.pistacchio.f1');
     bindText('.card.pistacchio .card-features li:nth-child(2)', 'card.pistacchio.f2');
     bindText('.card.pistacchio .card-features li:nth-child(3)', 'card.pistacchio.f3');
@@ -1384,3 +1384,4 @@
     init();
   }
 })();
+
