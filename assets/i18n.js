@@ -845,6 +845,10 @@
           border-radius:18px;
           letter-spacing:0.7px;
         }
+        .lang-switcher__btn:hover,
+        .lang-switcher__btn:active{
+          transform:none;
+        }
         .lang-switcher__menu{
           position:absolute;
           right:0;
