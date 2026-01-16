@@ -43,9 +43,31 @@
         var meta = document.querySelector('meta[name="viewport"]');
         if (!meta) return;
 
-        // 1366 matches iPad Pro landscape CSS width and keeps the desktop header/nav stable.
-        meta.setAttribute('content', 'width=1366, initial-scale=1, viewport-fit=cover');
+        // Function to set appropriate viewport based on orientation
+        function setViewport() {
+          var isPortrait = window.innerHeight > window.innerWidth;
+          if (isPortrait) {
+            // In portrait, use a smaller width that fits better but still shows desktop layout
+            // Scale down the 1366 layout to fit the screen width
+            var scale = window.innerWidth / 1366;
+            meta.setAttribute('content', 'width=1366, initial-scale=' + scale + ', viewport-fit=cover');
+          } else {
+            // In landscape, use full desktop width
+            meta.setAttribute('content', 'width=1366, initial-scale=1, viewport-fit=cover');
+          }
+        }
+        
+        // Set initial viewport
+        setViewport();
         document.documentElement.classList.add('force-desktop-on-tablet');
+        
+        // Update on orientation change
+        window.addEventListener('orientationchange', function() {
+          setTimeout(setViewport, 100);
+        });
+        window.addEventListener('resize', function() {
+          setViewport();
+        });
       } catch (e) {
         // no-op
       }
