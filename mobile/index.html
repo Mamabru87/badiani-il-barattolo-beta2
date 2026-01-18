@@ -584,7 +584,7 @@
       padding-bottom: 0;
       -webkit-overflow-scrolling: touch;
     }
-    .global-presence.is-expanded .global-presence-bg{ overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; touch-action: pan-x; cursor: grab; overscroll-behavior-x: contain; }
+    .global-presence.is-expanded .global-presence-bg{ overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
     .global-presence.is-expanded .global-presence-bg::-webkit-scrollbar{ display:none; }
     .global-presence.is-expanded .global-presence-bg img{
       top:-55%;
@@ -2333,36 +2333,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const scroller = section.querySelector('.global-presence-bg');
       if (!scroller) return;
-
-      section.setAttribute('tabindex', '0');
-      section.setAttribute('role', 'button');
-      section.setAttribute('aria-expanded', 'false');
-      section.setAttribute('aria-label', 'Toggle global presence map zoom');
       
       function centerScroller(){
         const max = scroller.scrollWidth - scroller.clientWidth;
         if (max > 0) scroller.scrollLeft = max / 2;
       }
 
-      function setExpanded(expanded){
-        section.classList.toggle('is-expanded', expanded);
-        section.style.cursor = expanded ? 'grab' : '';
-        section.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-
-        if (expanded) {
-          // Give layout a tick so scrollWidth is correct
-          requestAnimationFrame(centerScroller);
-        } else {
-          // Reset scroll so the collapsed centered crop is stable
-          scroller.scrollLeft = 0;
-        }
+      function collapse(){
+        section.classList.remove('is-expanded');
+        section.style.cursor = '';
+        scroller.scrollLeft = 0;
       }
 
       // Avoid toggling while the user is swiping/dragging
       let moved = false;
       let startX = 0;
       let startY = 0;
-      let ignoreClickUntil = 0;
 
       scroller.addEventListener('pointerdown', (e) => {
         moved = false;
@@ -2377,42 +2363,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dx > 10 || dy > 10) moved = true;
       }, { passive: true });
 
-      // If the user is actively scrolling the map, don't toggle on tap/click
-      let scrolling = false;
-      let scrollTimer = null;
-      scroller.addEventListener('scroll', () => {
-        if (!section.classList.contains('is-expanded')) return;
-        scrolling = true;
-        if (scrollTimer) clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(() => { scrolling = false; }, 140);
-      }, { passive: true });
-
-      function toggleExpanded(){
-        const expanded = section.classList.contains('is-expanded');
-        setExpanded(!expanded);
-      }
-
-      function collapse(){
-        setExpanded(false);
-      }
-
       // Tap/click toggles expanded state (mobile requirement)
-      section.addEventListener('pointerup', (e) => {
-        if (moved || scrolling) return;
-        ignoreClickUntil = Date.now() + 400;
-        toggleExpanded();
-      });
+      section.addEventListener('click', (e) => {
+        if (moved) return;
 
-      section.addEventListener('click', () => {
-        if (Date.now() < ignoreClickUntil) return;
-        if (moved || scrolling) return;
-        toggleExpanded();
-      });
+        section.classList.toggle('is-expanded');
+        const expanded = section.classList.contains('is-expanded');
 
-      section.addEventListener('keydown', (e) => {
-        if (e.key !== 'Enter' && e.key !== ' ') return;
-        e.preventDefault();
-        toggleExpanded();
+        // Cursor affordance only where it makes sense (mouse)
+        section.style.cursor = expanded ? 'grab' : '';
+
+        if (expanded) {
+          // Give layout a tick so scrollWidth is correct
+          requestAnimationFrame(centerScroller);
+        } else {
+          // Reset scroll so the collapsed centered crop is stable
+          scroller.scrollLeft = 0;
+        }
       });
 
       // Auto-collapse when the section scrolls out of view
