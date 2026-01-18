@@ -247,7 +247,7 @@
       --section-gap-sm: 8px;
       --section-gap-md: 12px;
       --section-gap-lg: 16px;
-      --section-divider-color: rgba(240,103,166,0.4);
+      --section-divider-color: #f067a6;
       --section-divider-width: 1px;
       /* Safe area insets for notched devices (iPhone X+) */
       --safe-area-top: env(safe-area-inset-top, 0px);
@@ -303,16 +303,8 @@
     }
     /* single-line banner: #bannerNext removed */
 
-    /* Linee divisorie rosa tra le sezioni */
-    section:not(#hero) {
-      border-top: var(--section-divider-width) solid var(--section-divider-color);
-      border-bottom: var(--section-divider-width) solid var(--section-divider-color);
-    }
-    section#mission,
-    section#gallery{
-      border-top: var(--section-divider-width) solid var(--section-divider-color);
-      border-bottom: var(--section-divider-width) solid var(--section-divider-color);
-    }
+    /* Linee divisorie rimosse su richiesta */
+    section { border-top: 0; border-bottom: 0; }
 
     /* HERO - TITOLO PIÃ™ IN ALTO */
     .hero{ position:relative; height:550px; overflow:hidden; display:flex; align-items:flex-start; justify-content:center; text-align:center; color:#fff; padding-top:80px; }
@@ -644,8 +636,8 @@
       position:relative; 
       overflow:hidden; 
       color:#fff;
-      border-top:var(--section-divider-width) solid var(--section-divider-color);
-      border-bottom:var(--section-divider-width) solid var(--section-divider-color);
+      border-top:0;
+      border-bottom:0;
     }
     .barattolo-intro::before{ 
       content:""; 
@@ -660,7 +652,7 @@
     }
     /* Let the video column auto-size from the video's aspect ratio when height is 100% */
     .barattolo-intro-content{ max-width:1200px; margin:0 auto; display:grid; grid-template-columns:auto 1fr; gap:80px; align-items:stretch; text-align:left; padding:0 20px; }
-    .barattolo-image-pila{ position:relative; aspect-ratio:9/16; width:auto; height:auto; max-height:70vh; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#000; }
+    .barattolo-image-pila{ position:relative; aspect-ratio:9/16; width:auto; height:auto; max-height:70vh; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#fff; }
 
     .barattolo-image-pila img, .barattolo-image-pila video{ width:100%; border-radius:15px; box-shadow:0 15px 50px rgba(0,0,0,0.2); transition:transform 0.4s ease; display:block; }
     .barattolo-image-pila img{ height:auto; border:6px solid #fff; }
@@ -1292,8 +1284,8 @@
       .barattolo-intro{ padding:0; margin:0; background:transparent !important; }
       .barattolo-intro::before{ display:none !important; }
       .barattolo-intro-content{ grid-template-columns:1fr; gap:0; padding:0; margin:0; background:transparent; } 
-      .barattolo-image-pila{ aspect-ratio:9/16; max-width:100%; width:100%; max-height:none; margin:0 auto; padding:0; display:flex; align-items:center; justify-content:center; line-height:0; font-size:0; overflow:hidden; background:#000 !important; border-bottom: var(--section-divider-width) solid var(--section-divider-color); }
-      .barattolo-image-pila video{ width:100%; height:100%; min-height:0; max-height:none; object-fit:contain; object-position:center; border-radius:0; box-shadow:none; display:block; margin:0; padding:0; background:#000; } 
+      .barattolo-image-pila{ aspect-ratio:9/16; max-width:100%; width:100%; max-height:none; margin:0 auto; padding:0; display:flex; align-items:center; justify-content:center; line-height:0; font-size:0; overflow:hidden; background:#fff !important; border-bottom: 0; }
+      .barattolo-image-pila video{ width:100%; height:100%; min-height:0; max-height:none; object-fit:contain; object-position:center; border-radius:0; box-shadow:none; display:block; margin:0; padding:0; background:#fff; } 
       .barattolo-image-pila video::-webkit-media-controls-start-playback-button,
       .barattolo-image-pila video::-webkit-media-controls{
         display:none !important;
@@ -1839,6 +1831,89 @@
 </section>
 
 
+<section id="story" class="buontalenti-story">
+  <div class="story-inner">
+    <div class="story-header">
+      <h2 class="story-title"><span class="story-title-main"><span class="story-title-buontalenti">Buontalenti</span>: la crema</span> <span class="story-title-sub">che ha fatto la storia</span></h2>
+      <p class="story-lead">
+        In the 1960s, in Florence, Badiani dedicated a special flavour to <span class="highlight-pink">Bernardo Buontalenti</span>, the Renaissance architect to whom tradition attributes the birth of <span class="highlight-pink">gelato</span> in the 16th century.
+      </p>
+    </div>
+
+    <div class="story-timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1500s</div>
+        <div class="timeline-title">The Origin</div>
+        <p class="timeline-desc">Bernardo Buontalenti invents gelato in <span class="highlight-pink">Renaissance Florence</span>, creating a frozen delicacy for the Medici court.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">1960s</div>
+        <div class="timeline-title">The Tribute</div>
+        <p class="timeline-desc">Badiani creates the "Buontalenti" cream with <span class="highlight-pink">4 simple ingredients</span> (cream, milk, sugar, eggs) honouring the inventor.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year" data-i18n="story.tl.year.today">TODAY</div>
+        <div class="timeline-title">The Legacy</div>
+        <p class="timeline-desc">Il Barattolo Gelato brings this iconic Florentine flavour to <span class="highlight-pink">premium retail</span> worldwide.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="heritage" class="heritage">
+  <h2>A Legacy of Excellence</h2>
+  <p class="heritage-intro">
+    Born in <span class="highlight-pink">Florence in 1932</span>, Badiani is one of the world's most prestigious gelato producers. From the birthplace of gelato, we have built an international presence spanning five countries across three continents.
+  </p>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">1932</div>
+      <div class="stat-label">Founded in Florence</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">30+</div>
+      <div class="stat-label">Stores Worldwide</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Italian Quality</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Countries</div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="barattolo" class="barattolo-intro">
+  <div class="barattolo-intro-content">
+    <div class="barattolo-image-pila">
+      <video id="barattoloVideo" autoplay muted loop playsinline webkit-playsinline preload="auto">
+        <source src="../1220.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="barattolo-text">
+      <h2>Il Barattolo <span>GELATO</span></h2>
+      <p>
+        Thanks to the success of our Buontalenti, Buontalenti Pistacchio, and La Dolcevita flavours, we have developed <span class="highlight-pink">Il Barattolo GELATO</span> — a premium line designed for <span class="highlight-pink">large-scale distribution</span>.
+      </p>
+      <p>
+        This innovative format brings the authentic artisanal quality of our gelato to a wider audience, making it more accessible without compromising on ingredient excellence and traditional craftsmanship.
+      </p>
+      <p>
+        With Il Barattolo Gelato, everyone can enjoy the rich, creamy flavours that have made Badiani famous, now in a convenient <span class="highlight-pink">500ml format</span>.
+      </p>
+      <a href="mailto:retail@badiani1932.com" class="cta-btn barattolo-cta" aria-label="Request distribution information via email">REQUEST SAMPLES AND PRICES NOW</a>
+    </div>
+  </div>
+</section>
+
+
 <section id="products" class="products">
   <h2 class="section-title">Premium <span>Collection</span></h2>
   <p class="section-subtitle">Three iconic flavours, authentic Florentine craftsmanship</p>
@@ -1916,87 +1991,6 @@
   </div>
 </section>
 
-
-<section id="story" class="buontalenti-story">
-  <div class="story-inner">
-    <div class="story-header">
-      <h2 class="story-title"><span class="story-title-main"><span class="story-title-buontalenti">Buontalenti</span>: la crema</span> <span class="story-title-sub">che ha fatto la storia</span></h2>
-      <p class="story-lead">
-        In the 1960s, in Florence, Badiani dedicated a special flavour to <span class="highlight-pink">Bernardo Buontalenti</span>, the Renaissance architect to whom tradition attributes the birth of <span class="highlight-pink">gelato</span> in the 16th century.
-      </p>
-    </div>
-
-    <div class="story-timeline">
-      <div class="timeline-item">
-        <div class="timeline-year">1500s</div>
-        <div class="timeline-title">The Origin</div>
-        <p class="timeline-desc">Bernardo Buontalenti invents gelato in <span class="highlight-pink">Renaissance Florence</span>, creating a frozen delicacy for the Medici court.</p>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-year">1960s</div>
-        <div class="timeline-title">The Tribute</div>
-        <p class="timeline-desc">Badiani creates the "Buontalenti" cream with <span class="highlight-pink">4 simple ingredients</span> (cream, milk, sugar, eggs) honouring the inventor.</p>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-year" data-i18n="story.tl.year.today">TODAY</div>
-        <div class="timeline-title">The Legacy</div>
-        <p class="timeline-desc">Il Barattolo Gelato brings this iconic Florentine flavour to <span class="highlight-pink">premium retail</span> worldwide.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section id="heritage" class="heritage">
-  <h2>A Legacy of Excellence</h2>
-  <p class="heritage-intro">
-    Born in <span class="highlight-pink">Florence in 1932</span>, Badiani is one of the world's most prestigious gelato producers. From the birthplace of gelato, we have built an international presence spanning five countries across three continents.
-  </p>
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-num">1932</div>
-      <div class="stat-label">Founded in Florence</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">30+</div>
-      <div class="stat-label">Stores Worldwide</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">100%</div>
-      <div class="stat-label">Italian Quality</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">5</div>
-      <div class="stat-label">Countries</div>
-    </div>
-  </div>
-</section>
-
-
-<section id="barattolo" class="barattolo-intro">
-  <div class="barattolo-intro-content">
-    <div class="barattolo-image-pila">
-      <video id="barattoloVideo" autoplay muted loop playsinline webkit-playsinline preload="auto">
-        <source src="../1220.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="barattolo-text">
-      <h2>Il Barattolo <span>GELATO</span></h2>
-      <p>
-        Thanks to the success of our Buontalenti, Buontalenti Pistacchio, and La Dolcevita flavours, we have developed <span class="highlight-pink">Il Barattolo GELATO</span> — a premium line designed for <span class="highlight-pink">large-scale distribution</span>.
-      </p>
-      <p>
-        This innovative format brings the authentic artisanal quality of our gelato to a wider audience, making it more accessible without compromising on ingredient excellence and traditional craftsmanship.
-      </p>
-      <p>
-        With Il Barattolo Gelato, everyone can enjoy the rich, creamy flavours that have made Badiani famous, now in a convenient <span class="highlight-pink">500ml format</span>.
-      </p>
-      <a href="mailto:retail@badiani1932.com" class="cta-btn barattolo-cta" aria-label="Request distribution information via email">REQUEST SAMPLES AND PRICES NOW</a>
-    </div>
-  </div>
-</section>
 
 
 <section id="mission" class="mission-vision">
