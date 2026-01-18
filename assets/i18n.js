@@ -46,6 +46,7 @@
       'flavor.mango': 'Mango',
       'flavor.blueberry': 'Blueberry',
 
+      'hero.titleHtml': 'The Barattolo <span>GELATO</span>',
       'hero.subtitle': 'A Creative Flavour Journey from Florence',
       'hero.lead': 'Authentic Florentine artisan gelato for premium retail distribution. Over 90 years of gelato-making excellence from the birthplace of gelato.',
       'hero.ctaExplore': 'Explore Flavours',
@@ -211,6 +212,7 @@
       'flavor.mango': 'Mango',
       'flavor.blueberry': 'Mirtillo',
 
+      'hero.titleHtml': 'Il Barattolo <span>GELATO</span>',
       'hero.subtitle': 'Un viaggio creativo nei sapori da Firenze',
       'hero.lead': "Gelato artigianale fiorentino autentico per la distribuzione retail premium. Oltre 90 anni di eccellenza nella gelateria, dalla città in cui è nato il gelato.",
       'hero.ctaExplore': 'Scopri i gusti',
@@ -376,6 +378,7 @@
       'flavor.mango': 'Mango',
       'flavor.blueberry': 'Arándano',
 
+      'hero.titleHtml': 'El Barattolo <span>GELATO</span>',
       'hero.subtitle': 'Un viaje creativo de sabores desde Florencia',
       'hero.lead': 'Helado artesanal florentino auténtico para distribución retail premium. Más de 90 años de excelencia heladera desde la cuna del helado.',
       'hero.ctaExplore': 'Explorar sabores',
@@ -541,6 +544,7 @@
       'flavor.mango': 'Mangue',
       'flavor.blueberry': 'Myrtille',
 
+      'hero.titleHtml': 'Le Barattolo <span>GELATO</span>',
       'hero.subtitle': 'Un voyage créatif de saveurs depuis Florence',
       'hero.lead': 'Gelato artisanal florentin authentique pour la distribution retail premium. Plus de 90 ans d’excellence depuis le berceau du gelato.',
       'hero.ctaExplore': 'Découvrir les saveurs',
