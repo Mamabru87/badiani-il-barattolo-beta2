@@ -302,9 +302,9 @@
       'mobile.scrollHint': '← Scorri per vedere tutto →',
 
       'why.title': 'Perché scegliere Badiani',
-      'why.b1.title': 'Heritage',
+      'why.b1.title': 'Tradizione',
       'why.b1.desc': '93 anni di eccellenza nella gelateria da Firenze, la culla del gelato',
-      'why.b1.descHtml': '<span class="highlight-pink">93 anni</span> di eccellenza nella gelateria da Firenze, la culla del gelato',
+      'why.b1.descHtml': '<span class="highlight-pink">93 anni</span>&nbsp;di eccellenza nella gelateria da Firenze, la culla del gelato',
       'why.b2.title': 'Presenza globale',
       'why.b2.desc': 'Oltre 30 negozi nel mondo, incluso il Museo del Louvre a Parigi',
       'why.b2.descHtml': 'Oltre 30 negozi nel mondo, incluso il <span class="highlight-pink">Museo del Louvre</span> a Parigi',
