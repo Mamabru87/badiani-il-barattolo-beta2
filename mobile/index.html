@@ -588,23 +588,28 @@
       position: absolute;
       top: 0;
       left: 0;
-      right: auto;
+      right: 0;
       bottom: 0;
       overflow-x: auto;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
-      width: fit-content;
+    }
+    .global-presence.is-expanded .global-presence-bg img{
+      width: 250%;
+      height: 155%;
+      max-width: none;
+      margin-left: 0;
+      margin-top: -27.5%;
+      object-fit: cover;
+      object-position: center;
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      pointer-events: none;
     }
     .global-presence.is-expanded .global-presence-bg::-webkit-scrollbar{ display:none; }
-    .global-presence.is-expanded .global-presence-bg img{
-      top:-55%;
-      left:0;
-      transform:none;
-      width:250%;
-      height:155%;
-      pointer-events:none;
-    }
     .global-presence-headline {
       transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
       opacity: 1;
@@ -2361,7 +2366,6 @@ document.addEventListener('DOMContentLoaded', () => {
       function collapse(){
         section.classList.remove('is-expanded');
         section.style.cursor = '';
-        scroller.style.right = '';
         scroller.scrollLeft = 0;
       }
 
@@ -2427,14 +2431,10 @@ document.addEventListener('DOMContentLoaded', () => {
         section.style.cursor = expanded ? 'grab' : '';
 
         if (expanded) {
-          // Remove the right: 0 constraint so image can overflow and create scrollWidth > clientWidth
-          scroller.style.right = 'auto';
-          
-          // Wait for CSS transition and layout to complete
+          // Wait for CSS transition and layout to complete, then center scroll
           setTimeout(centerScroller, 700);
         } else {
-          // Reset constraints
-          scroller.style.right = '';
+          // Reset scroll so the collapsed centered crop is stable
           scroller.scrollLeft = 0;
         }
       });
