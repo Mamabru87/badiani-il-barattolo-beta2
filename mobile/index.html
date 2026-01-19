@@ -264,6 +264,13 @@
     a, button, .card-img, .nav-menu a, .cta-btn, .menu-toggle { cursor: pointer; touch-action: manipulation; -webkit-touch-callout: none; }
     * { -webkit-tap-highlight-color: transparent; }
 
+    /* Spanish labels are longer: slightly tighten nav buttons when lang=es */
+    html[lang="es"] .nav-menu a{
+      font-size: 9px;
+      padding: 5px 7px;
+      letter-spacing: 0.7px;
+    }
+
     /* Cross-browser flexbox fixes */
     .nav-menu, .products-grid, .benefits, .gallery-grid, .mv-tabs {
       display: -webkit-box;
@@ -286,7 +293,7 @@
     header{ background:var(--badiani-blue); padding:18px clamp(16px, 3.2vw, 40px); display:-webkit-flex; display:flex; -webkit-align-items:center; align-items:center; -webkit-justify-content:space-between; justify-content:space-between; gap:clamp(10px, 1.6vw, 24px); position:relative; overflow:visible; }
     .logo-link{ display:-webkit-flex; display:flex; -webkit-align-items:center; align-items:center; text-decoration:none; }
     .logo-img{ height:clamp(42px, 4.0vw, 55px); width:auto; -o-object-fit:contain; object-fit:contain; -webkit-filter: invert(1) grayscale(1) brightness(200%); filter: invert(1) grayscale(1) brightness(200%); mix-blend-mode: screen; }
-    .nav-menu{ display:-webkit-flex; display:flex; gap:clamp(12px, 2.4vw, 35px); -webkit-align-items:center; align-items:center; }
+    .nav-menu{ display:-webkit-flex; display:flex; gap:clamp(12px, 2.4vw, 35px); -webkit-align-items:center; align-items:center; white-space:nowrap; }
     .nav-menu a{ color:#fff; text-decoration:none; font-size:clamp(13px, 1.15vw, 16px); letter-spacing:clamp(1px, 0.18vw, 2px); text-transform:uppercase; -webkit-transition:all 0.3s; transition:all 0.3s; padding:clamp(9px, 1.0vw, 12px) clamp(12px, 1.6vw, 20px); border-radius:25px; font-weight:500; }
     .nav-menu a:hover{ background:var(--badiani-pink); -webkit-transform:translateY(-2px); transform:translateY(-2px); }
 
@@ -1098,6 +1105,7 @@
         flex-wrap:nowrap;
         flex:1;
         min-width:0;
+        white-space:nowrap;
         scroll-padding-left:10px;
         margin-left:auto;
         padding-top:4px;
@@ -1105,7 +1113,7 @@
       .nav-menu.active{right:auto;} 
       .nav-menu a{
         font-size:10px;
-        padding:6px 8px;
+        padding:5px 7px;
         line-height:1;
         display:flex;
         align-items:center;
@@ -1597,6 +1605,10 @@
         display:block;
         overflow:visible;
         text-align:center;
+        word-break:break-word;
+        hyphens:auto;
+        padding-left:6px;
+        padding-right:6px;
       }
       .timeline-item{ cursor:pointer; }
       /* (overridden above) */
@@ -1639,7 +1651,7 @@
       .gallery-item{ width:20vw; height:20vw; max-width:85px; max-height:85px; border-width:2px; }
       
       .nav-menu{ width:100%; padding:0 4px 6px; gap:4px; }
-      .nav-menu a{ font-size:10px; padding:6px 8px; letter-spacing:0.8px; }
+      .nav-menu a{ font-size:9px; padding:5px 7px; letter-spacing:0.8px; }
       
       .card-img{ aspect-ratio: auto; }
       
@@ -1675,7 +1687,7 @@
       .barattolo-text h2{font-size:5.5vw;}
       
       .nav-menu{ width:100%; padding:0 4px 6px; gap:4px; }
-      .nav-menu a{ font-size:9px; padding:6px 7px; letter-spacing:0.7px; }
+      .nav-menu a{ font-size:9px; padding:4px 6px; letter-spacing:0.7px; }
       
       .cta-btn{ padding:10px 20px; font-size:3.2vw; }
       
@@ -1844,7 +1856,7 @@
       <div class="timeline-item">
         <div class="timeline-year">1500s</div>
         <div class="timeline-title">The Origin</div>
-        <p class="timeline-desc">Bernardo Buontalenti invents gelato in <span class="highlight-pink">Renaissance Florence</span>, creating a frozen delicacy for the Medici court.</p>
+        <p class="timeline-desc">Bernardo Buontalenti invents gelato in <span class="highlight-pink">Renaissance&nbsp;Florence,</span> creating a frozen delicacy for the Medici court.</p>
       </div>
 
       <div class="timeline-item">
